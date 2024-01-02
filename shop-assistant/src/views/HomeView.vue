@@ -23,3 +23,19 @@ import Navigation from "@/components/Navigation.vue";
   <font-awesome-icon :icon="['fas', 'times']" />
 
 -->
+
+<!--
+  Market:
+  <Market :text="'Billa'" :class-name="'billa'" />
+  <Market :text="'Spar'" :class-name="'spar'" />
+  <Market :text="'dm'" :class-name="'dm'" />
+  <Market :text="'Bipa'" :class-name="'bipa'" />
+  <Market :text="'Hofer'" :class-name="'hofer'" />
+  <Market :text="'Lidl'" :class-name="'lidl'" />
+  <Market :text="'Metro'" :class-name="'metro'" />
+  <Market :text="'MPreis'" :class-name="'mpreis'" />
+  <Market :text="'Müller'" :class-name="'mueller'" />
+  <Market :text="'Penny'" :class-name="'penny'" />
+  <Market :text="'Unimarkt'" :class-name="'unimarkt'" />
+  <Market :text="'Rewe'" :class-name="'rewe'" />
+-->
