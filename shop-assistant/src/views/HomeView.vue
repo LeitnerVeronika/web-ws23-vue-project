@@ -1,23 +1,38 @@
 <script setup lang="ts">
 import Navigation from "@/components/Navigation.vue";
-import MarketTypes from "@/components/enums/MarketTypes";
 import ProductTypes from "../components/enums/ProductTypes";
 import ProductContainer from "@/components/ProductContainer.vue";
+import axios from "axios";
+import {onMounted, ref} from "vue";
 
+const products = ref(null);
+const loading = ref(false);
+const error = ref(null);
 
-//Output should look like this:
-let products = [
-  {name: 'Test Product 10g', market: MarketTypes.Billa, priceOld: 1.29, priceNew: 0.99, difference: -10},
-  {name: 'Test Product 2 10g', market: MarketTypes.Billa, priceOld: 2.10, priceNew: 2.99, difference: 13}
-]
-let test = [{testName: 'Hi'}]
+onMounted(async () => {
+  loading.value = true;
+  try {
+    const response = await axios.get('http://localhost:3000/api/today');
+    products.value = response.data;
+  } catch (err) {
+    error.value = 'Error fetching products';
+  } finally {
+    loading.value = false;
+  }
+});
 
-console.log(products)
 </script>
 
 <template>
   <Navigation/>
   <main>
-    <ProductContainer :type="ProductTypes.default" :data="{products}"></ProductContainer>
+
+    <div v-if="loading">Loading...</div>
+    <div v-else-if="error">{{ error }}</div>
+    <div v-else>
+      <div v-if="products !== null">
+        <ProductContainer :type="ProductTypes.default" :data="{products}"></ProductContainer>
+      </div>
+    </div>
   </main>
 </template>

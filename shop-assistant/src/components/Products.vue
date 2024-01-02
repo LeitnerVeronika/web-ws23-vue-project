@@ -29,7 +29,7 @@ defineProps({
       required: true
 },
   difference: {
-    type: Number,
+    type: String,
     required: true
   },
   type: {
@@ -46,10 +46,11 @@ defineProps({
     </router-link>
     <IconMarket name="{{market}}"/>
     <div>
-      {{priceNew}}€ | <s>{{priceOld}}€</s>
+      {{priceNew}} | <s>{{priceOld}}</s>
     </div>
-    <div v-if="difference >= 0" class="neg-dif">{{difference}}%</div>
-    <div v-if="difference < 0" class="pos-dif">{{difference}}%</div>
+<!--    {{difference.startsWith("-")}}-->
+    <div v-if="difference.startsWith('-')" class="neg-dif">{{difference}}</div>
+    <div v-if="difference.startsWith('+')" class="pos-dif">{{difference}}</div>
     <div v-if="type == 1">
       <IconFavorites/>
       <IconCart/>

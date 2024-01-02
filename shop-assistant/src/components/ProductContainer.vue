@@ -20,8 +20,8 @@ defineProps({
 <template>
   <section class="product-table">
     <TableHeader/>
-    <Products v-for="product in data.products" :difference="product.difference" :price-old="product.priceOld"
-              :price-new="product.priceNew" :market="product.market" :name="product.name" :type="type"/>
+    <Products v-for="product in data.products" :difference="product.priceDiffPercent" :price-old="product.priceBefore"
+              :price-new="product.priceAfter" :market="product.productMarket" :name="product.productName" :type="type"/>
   </section>
 </template>
 
