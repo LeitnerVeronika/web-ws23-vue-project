@@ -1,7 +1,13 @@
 <template>
-  <div class="about">
+
     <h1>This is an about page</h1>
-  </div>
+
+  <font-awesome-icon :icon="['fas', 'star']" />
+  <Button
+      :iconPrefix="'fas'"
+      :iconName="'star'"
+  />
+
 </template>
 
 <style>

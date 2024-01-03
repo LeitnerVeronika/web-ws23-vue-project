@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import IconMarket from "@/components/icons/IconMarket.vue";
+// import IconMarket from "@/components/icons/IconMarket.vue";
 import HeroImage from "@/components/HeroImage.vue";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
@@ -18,7 +18,7 @@ const data = ref(null);
 const loading = ref(false);
 const error = ref(null);
 let products = ref(null);
-let difference = ref(null);
+let priceDiffPercent = ref(null);
 
 onMounted(async () => {
   loading.value = true;
@@ -46,13 +46,13 @@ onMounted(async () => {
     <div v-if="data !== null">
       <section>
         <h1 class="product-header">{{ products[0].productName }}</h1>
-        <IconMarket name="{{products[0].productMarket}}"/>
+<!--        <IconMarket productName="{{products[0].productMarket}}"/>-->
         <div>
           {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
         </div>
         <div v-if="difference !== undefined">
-          <div v-if="difference.startsWith('-')" class="neg-dif">{{ difference }}</div>
-        <div v-if="difference.startsWith('+')" class="pos-dif">{{ difference }}</div>
+          <div v-if="difference.startsWith('-')" class="neg-dif">{{ priceDiffPercent }}</div>
+        <div v-if="difference.startsWith('+')" class="pos-dif">{{ priceDiffPercent }}</div>
         </div>
       </section>
     </div>
