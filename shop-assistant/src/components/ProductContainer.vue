@@ -13,15 +13,21 @@ defineProps({
   data:{
     type: Object,
     required: true
+  },
+  search:{
+    type: Boolean,
+    required: true
   }
-})
+});
 </script>
 
 <template>
   <section class="product-table">
     <TableHeader/>
-    <Products v-for="product in data.products" :difference="product.difference" :price-old="product.priceOld"
-              :price-new="product.priceNew" :market="product.market" :name="product.name" :type="type"/>
+    <Products v-if="search" v-for="product in data.products" :difference="product.differenceString" :price-old="product.previousPrice"
+              :price-new="product.currentPrice" :market="product.productMarket" :name="product.productName" :type="type" :search="search"/>
+    <Products v-else v-for="product in data.products" :difference="product.priceDiffPercent" :price-old="product.priceBefore"
+              :price-new="product.priceAfter" :market="product.productMarket" :name="product.productName" :type="type"/>
   </section>
 </template>
 
