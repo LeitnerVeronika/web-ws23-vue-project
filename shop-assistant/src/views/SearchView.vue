@@ -2,7 +2,7 @@
   import ProductTypes from "@/components/enums/ProductTypes";
 
   const searchString = "semmel";
-  const markets = "onlySpar=true"
+  const markets = "onlySpar=false"
   import axios from "axios";
   import {onMounted, ref} from "vue";
   import ProductContainer from "@/components/ProductContainer.vue";

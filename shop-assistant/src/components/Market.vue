@@ -1,21 +1,26 @@
+<script setup lang="ts">
+
+const props = defineProps({
+  text: {
+    type: String,
+    required: true
+  },
+});
+
+let className = props.text?.toLowerCase()
+</script>
+
 <template>
   <div class="market-container" :class="className">
-    {{ text }}
+    {{text}}
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    text: String,
-    className: String,
-  },
-};
-</script>
-
 <style scoped>
 .market-container {
-  max-width: 90px;
+  max-width: 100px;
+  min-width: 80px;
+  max-height: 30px;
   text-align: center;
   padding: 2px;
   text-transform: uppercase;
@@ -55,7 +60,7 @@ export default {
   background-color: #8B0000;
 }
 
-.mueller {
+.müller {
   background-color: #FFA500;
 }
 
