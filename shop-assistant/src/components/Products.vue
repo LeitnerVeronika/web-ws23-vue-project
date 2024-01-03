@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 
-import type { PropType} from "vue";
+import type {PropType} from "vue";
 import type ProductTypes from "@/components/enums/ProductTypes";
 import type MarketTypes from "@/components/enums/MarketTypes";
 import IconMarket from "@/components/icons/IconMarket.vue";
@@ -10,12 +10,11 @@ import IconFavorites from "@/components/icons/IconFavorites.vue";
 import IconAlert from "@/components/icons/IconAlert.vue";
 import IconDelete from "@/components/icons/IconDelete.vue";
 
-defineProps({
+const props = defineProps({
   name: {
-      type: String,
-      required: true
+    type: String,
+    required: true
   },
-
   market: {
     type: Number as PropType<MarketTypes>,
     required: true
@@ -25,9 +24,9 @@ defineProps({
     required: true
   },
   priceOld: {
-  type: Number,
-      required: true
-},
+    type: Number,
+    required: true
+  },
   difference: {
     type: String,
     required: true
@@ -36,21 +35,42 @@ defineProps({
     type: Number as PropType<ProductTypes>,
     required: false
   },
+  search:{
+    type: Boolean,
+    required:false
+  }
 })
+
+let diff = props.difference
+diff = diff.split(/[()]/);
+let diffString = diff[1]
+
+
 </script>
 
 <template>
   <section class="grid-container">
-    <router-link class="product-link" :to="'/product/' + name">
-      <h2 class="table-productName">{{name}}</h2>
+    <router-link class="product-link" :to="'/product/' + name + '?market=' + market + '&productName=' + name">
+      <h2 class="table-productName">{{ name }}</h2>
     </router-link>
     <IconMarket name="{{market}}"/>
-    <div>
-      {{priceNew}} | <s>{{priceOld}}</s>
+    <div v-if="search">
+      {{ priceNew }}€ | <s>{{ priceOld }}€</s>
     </div>
-<!--    {{difference.startsWith("-")}}-->
-    <div v-if="difference.startsWith('-')" class="neg-dif">{{difference}}</div>
-    <div v-if="difference.startsWith('+')" class="pos-dif">{{difference}}</div>
+    <div v-else>
+      {{ priceNew }}| <s>{{ priceOld }}</s>
+    </div>
+    <div v-if="search">
+      <div v-if="diffString !== undefined">
+      <div v-if="diffString.startsWith('-')" class="neg-dif">{{ diffString }}</div>
+      <div v-if="diffString.startsWith('+')" class="pos-dif">{{ diffString }}</div>
+      </div>
+    </div>
+      <div v-else></div>
+    <div v-else>
+      <div v-if="difference.startsWith('-')" class="neg-dif">{{ difference }}</div>
+      <div v-if="difference.startsWith('+')" class="pos-dif">{{ difference }}</div>
+    </div>
     <div v-if="type == 1">
       <IconFavorites/>
       <IconCart/>
@@ -74,17 +94,20 @@ defineProps({
   gap: 50px;
   grid-template-columns: 4fr 0.5fr 1fr 1fr 0.5fr;
 }
-.table-productName{
+
+.table-productName {
   color: var(--color-primary);
 }
-.neg-dif{
+
+.neg-dif {
   color: darkred;
 }
 
-.pos-dif{
+.pos-dif {
   color: darkgreen;
 }
-.product-link{
+
+.product-link {
   font-size: medium;
   margin: 0;
 }

@@ -15,7 +15,7 @@ onMounted(async () => {
     const response = await axios.get('http://localhost:3000/api/today');
     products.value = response.data;
   } catch (err) {
-    error.value = 'Error fetching products';
+    error.value = 'Error fetching data';
   } finally {
     loading.value = false;
   }
@@ -31,7 +31,7 @@ onMounted(async () => {
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <div v-if="products !== null">
-        <ProductContainer :type="ProductTypes.default" :data="{products}"></ProductContainer>
+        <ProductContainer :type="ProductTypes.default" :data="{products}" :search="false"/>
       </div>
     </div>
   </main>
