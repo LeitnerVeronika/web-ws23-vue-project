@@ -38,6 +38,26 @@ onMounted(async () => {
 </template>
 
 <!--
+  Buttons
+  <Button
+        :iconPrefix="'fas'"
+        :iconName="'cart-plus'"
+        :clickHandler="handleCustomClick"
+  />
+
+
+  <script setup>
+  import Button from "@/components/Button.vue";
+
+  const handleCustomClick = () => {
+    // add logic for button click
+    console.log('Custom function has been called!');
+  };
+  </script>
+
+-->
+
+<!--
   Icons:
 
   <font-awesome-icon :icon="['fas', 'cart-plus']" />
