@@ -1,11 +1,8 @@
 <script setup lang="ts">
-// defineProps<{
-//   imgSrc: string
-// }>();
+
 </script>
 
 <template>
-<!-- <img class="responsive-image" :src="imgSrc" alt="Hero Image" /> -->
 <img class="responsive-image" src="../images/strawberries.jpg" alt="Hero Image" />
 </template>
 
