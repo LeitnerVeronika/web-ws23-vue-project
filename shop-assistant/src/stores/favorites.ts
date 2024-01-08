@@ -5,10 +5,17 @@ export const useFavoriteStore = defineStore('favorites ', () => {
   const products = reactive([]);
 
   function addProduct(data) {
-    console.log("Item should be added to store: " + data);
-    console.log("Item Name: " + data.name);
     products.push(data)
+    localStorage.setItem('favorites', JSON.stringify(products));
+  }
+  function removeProduct(data){
+    products.pop(data);
+    localStorage.setItem('favorites', JSON.stringify(products));
   }
 
-  return { products, addProduct}
+  function deleteStorage(){
+    localStorage.removeItem('favorites');
+  }
+
+  return { products, addProduct, removeProduct, deleteStorage}
 })
