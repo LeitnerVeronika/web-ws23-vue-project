@@ -1,7 +1,18 @@
+<script setup lang="ts">
+
+import {useFavoriteStore} from "@/stores/favorites";
+import Navigation from "@/components/Navigation.vue";
+import ProductContainer from "@/components/ProductContainer.vue";
+import ProductTypes from "@/components/enums/ProductTypes";
+
+const store = useFavoriteStore();
+const products = store.products;
+
+</script>
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <Navigation/>
+  <ProductContainer :type="ProductTypes.default" :data="{products}" :search="false"/>
+
 </template>
 
 <style>

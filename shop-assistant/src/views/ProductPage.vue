@@ -19,7 +19,7 @@ const data = ref(null);
 const loading = ref(false);
 const error = ref(null);
 let products = ref(null);
-let difference = ref(null);
+let priceDiffPercent = ref(null);
 
 onMounted(async () => {
   loading.value = true;
@@ -48,14 +48,14 @@ onMounted(async () => {
       <section>
         <h1 class="product-header">{{ products[0].productName }}</h1>
         <div class="market-container">
-        <Market :text="market"/>
+          <Market :text="market"/>
         </div>
         <div>
           {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
         </div>
         <div v-if="difference !== undefined">
-          <div v-if="difference.startsWith('-')" class="neg-dif">{{ difference }}</div>
-        <div v-if="difference.startsWith('+')" class="pos-dif">{{ difference }}</div>
+          <div v-if="difference.startsWith('-')" class="neg-dif">{{ priceDiffPercent }}</div>
+        <div v-if="difference.startsWith('+')" class="pos-dif">{{ priceDiffPercent }}</div>
         </div>
       </section>
     </div>

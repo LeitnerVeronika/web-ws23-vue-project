@@ -16,18 +16,18 @@ defineProps({
   },
   search:{
     type: Boolean,
-    required: true
-  }
+    required: false
+  },
 });
 </script>
 
 <template>
   <section class="product-table">
     <TableHeader/>
-    <Products v-if="search" v-for="product in data.products" :difference="product.differenceString" :price-old="product.previousPrice"
-              :price-new="product.currentPrice" :market="product.productMarket" :name="product.productName" :type="type" :search="search"/>
-    <Products v-else v-for="product in data.products" :difference="product.priceDiffPercent" :price-old="product.priceBefore"
-              :price-new="product.priceAfter" :market="product.productMarket" :name="product.productName" :type="type"/>
+    <Products v-if="search" v-for="product in data.products" :priceDiffPercent="product.differenceString" :priceBefore="product.previousPrice"
+              :priceAfter="product.currentPrice" :productMarket="product.productMarket" :productName="product.productName" :type="type" :search="search"/>
+    <Products v-else v-for="product in data.products" :priceDiffPercent="product.priceDiffPercent" :priceBefore="product.priceBefore"
+              :priceAfter="product.priceAfter" :productMarket="product.productMarket" :productName="product.productName" :type="type"/>
   </section>
 </template>
 

@@ -35,7 +35,6 @@ onMounted(async () => {
   </div>
   <!-- <HeroImage imgSrc="../images/strawberries.jpg"/> -->
   <main>
-
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
