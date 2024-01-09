@@ -56,7 +56,7 @@ function addToCart(){
     <router-link class="product-link" :to="'/product/' + productName + '?productMarket=' + productMarket + '&productName=' + productName">
       <h2 class="table-productName">{{ productName }}</h2>
     </router-link>
-    <IconMarket name="{{productMarket}}"/>
+    <Market :text="market"/>
     <div v-if="search">
       {{ priceAfter }}€ | <s>{{ priceBefore }}€</s>
     </div>
@@ -78,16 +78,27 @@ function addToCart(){
       <button @click="addToCart()">Add to cart</button>
     </div>
     <div v-if="type == 1">
-<!--      <IconFavorites/>-->
-<!--      <IconCart/>-->
-<!--      <IconAlert/>-->
-    </div>
-    <div v-else-if="type == 2">
+      <font-awesome-icon :icon="['fas', 'star']" />
+
+      <Button
+          :iconPrefix="'fas'"
+          :iconName="'cart-plus'"
+      />
+      <font-awesome-icon :icon="['fas', 'star']" />
 <!--      <IconFavorites/>-->
 <!--      <IconDelete/>-->
     </div>
     <div v-else>
 <!--      <IconCart/>-->
+
+      <Button
+          :iconPrefix="'fas'"
+          :iconName="'star'"
+      />
+<!--      <Button-->
+<!--          :iconPrefix="'fas'"-->
+<!--          :iconName="'cart-plus'"-->
+<!--      <font-awesome-icon :icon="['fas', 'star']" />-->
 <!--      <IconFavorites/>-->
     </div>
   </section>
