@@ -4,11 +4,12 @@
 import type {PropType} from "vue";
 import type ProductTypes from "@/components/enums/ProductTypes";
 import type MarketTypes from "@/components/enums/MarketTypes";
-import IconMarket from "@/components/icons/IconMarket.vue";
-import IconCart from "@/components/icons/IconCart.vue";
-import IconFavorites from "@/components/icons/IconFavorites.vue";
-import IconAlert from "@/components/icons/IconAlert.vue";
-import IconDelete from "@/components/icons/IconDelete.vue";
+import Market from "@/components/Market.vue";
+// import IconMarket from "@/components/icons/IconMarket.vue";
+// import IconCart from "@/components/icons/IconCart.vue";
+// import IconFavorites from "@/components/icons/IconFavorites.vue";
+// import IconAlert from "@/components/icons/IconAlert.vue";
+// import IconDelete from "@/components/icons/IconDelete.vue";
 
 const props = defineProps({
   name: {
@@ -53,7 +54,7 @@ let diffString = diff[1]
     <router-link class="product-link" :to="'/product/' + name + '?market=' + market + '&productName=' + name">
       <h2 class="table-productName">{{ name }}</h2>
     </router-link>
-    <IconMarket name="{{market}}"/>
+    <Market :text="market"/>
     <div v-if="search">
       {{ priceNew }}€ | <s>{{ priceOld }}€</s>
     </div>
@@ -72,17 +73,33 @@ let diffString = diff[1]
       <div v-if="difference.startsWith('+')" class="pos-dif">{{ difference }}</div>
     </div>
     <div v-if="type == 1">
-      <IconFavorites/>
-      <IconCart/>
-      <IconAlert/>
+<!--      <IconFavorites/>-->
+      <font-awesome-icon :icon="['fas', 'star']" />
+
+      <Button
+          :iconPrefix="'fas'"
+          :iconName="'cart-plus'"
+      />
+<!--      <IconCart/>-->
+<!--      <IconAlert/>-->
     </div>
     <div v-else-if="type == 2">
-      <IconFavorites/>
-      <IconDelete/>
+      <font-awesome-icon :icon="['fas', 'star']" />
+<!--      <IconFavorites/>-->
+<!--      <IconDelete/>-->
     </div>
     <div v-else>
-      <IconCart/>
-      <IconFavorites/>
+<!--      <IconCart/>-->
+      <Button
+          :iconPrefix="'fas'"
+          :iconName="'star'"
+      />
+<!--      <Button-->
+<!--          :iconPrefix="'fas'"-->
+<!--          :iconName="'cart-plus'"-->
+<!--      />-->
+<!--      <font-awesome-icon :icon="['fas', 'star']" />-->
+<!--      <IconFavorites/>-->
     </div>
   </section>
 

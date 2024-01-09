@@ -1,11 +1,12 @@
 <script setup lang="ts">
 
-import IconMarket from "@/components/icons/IconMarket.vue";
+// import IconMarket from "@/components/icons/IconMarket.vue";
 import HeroImage from "@/components/HeroImage.vue";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import Navigation from "@/components/Navigation.vue";
+import Market from "@/components/Market.vue";
 
 const route = useRoute();
 const market = route.query.market;
@@ -46,7 +47,9 @@ onMounted(async () => {
     <div v-if="data !== null">
       <section>
         <h1 class="product-header">{{ products[0].productName }}</h1>
-        <IconMarket name="{{products[0].productMarket}}"/>
+        <div class="market-container">
+        <Market :text="market"/>
+        </div>
         <div>
           {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
         </div>
@@ -62,6 +65,11 @@ onMounted(async () => {
 <style scoped>
 section {
   text-align: center;
+}
+
+.market-container{
+  display: flex;
+  justify-content: center;
 }
 
 .product-header {
