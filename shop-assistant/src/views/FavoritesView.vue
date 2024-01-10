@@ -10,7 +10,6 @@ const products = store.products;
 
 </script>
 <template>
-  <Navigation/>
   <ProductContainer :type="ProductTypes.default" :data="{products}" :search="false"/>
 
 </template>

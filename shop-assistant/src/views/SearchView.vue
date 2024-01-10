@@ -2,7 +2,7 @@
   import ProductTypes from "@/components/enums/ProductTypes";
 
   const searchString = "semmel";
-  const markets = "onlySpar=false"
+  const markets = "spar,billa"
   import axios from "axios";
   import {onMounted, ref} from "vue";
   import ProductContainer from "@/components/ProductContainer.vue";
@@ -30,7 +30,6 @@
 </script>
 
 <template>
-  <Navigation/>
   <SearchBar/>
   <div v-if="loading">Loading...</div>
   <div v-else-if="error">{{ error }}</div>

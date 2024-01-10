@@ -1,12 +1,10 @@
 <script setup lang="ts">
 
-// import IconMarket from "@/components/icons/IconMarket.vue";
 import HeroImage from "@/components/HeroImage.vue";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import Navigation from "@/components/Navigation.vue";
-import Market from "@/components/Market.vue";
 
 const route = useRoute();
 const market = route.query.market;
@@ -19,7 +17,7 @@ const data = ref(null);
 const loading = ref(false);
 const error = ref(null);
 let products = ref(null);
-let priceDiffPercent = ref(null);
+let difference = ref(null);
 
 onMounted(async () => {
   loading.value = true;
@@ -54,8 +52,7 @@ onMounted(async () => {
           {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
         </div>
         <div v-if="difference !== undefined">
-          <div v-if="difference.startsWith('-')" class="neg-dif">{{ priceDiffPercent }}</div>
-        <div v-if="difference.startsWith('+')" class="pos-dif">{{ priceDiffPercent }}</div>
+          <div :class="[products[0].differenceColor]">{{ products[0].differencePercent}}%</div>
         </div>
       </section>
     </div>
@@ -67,20 +64,15 @@ section {
   text-align: center;
 }
 
-.market-container{
-  display: flex;
-  justify-content: center;
-}
-
 .product-header {
   color: var(--color-primary);
 }
 
-.neg-dif {
+.red {
   color: darkred;
 }
 
-.pos-dif {
+.green {
   color: darkgreen;
 }
 </style>
