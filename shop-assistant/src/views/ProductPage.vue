@@ -4,7 +4,6 @@ import HeroImage from "@/components/HeroImage.vue";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
-import Navigation from "@/components/Navigation.vue";
 
 const route = useRoute();
 const market = route.query.market;
@@ -37,7 +36,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Navigation/>
   <HeroImage/>
   <div v-if="loading">Loading...</div>
   <div v-else-if="error">{{ error }}</div>

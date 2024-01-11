@@ -4,11 +4,18 @@ const port = 3000;
 const cors = require('cors');
 const axios = require("axios"); // Import the cors middleware
 
+const isDepricatedURL = true;
+
 
 app.use(cors());
 
 app.get('/api/today', (req, res) => {
-    const apiUrl = 'https://api.preisrunter.net/v1/ranking/today/';
+    let apiUrl;
+    if(isDepricatedURL){
+        apiUrl = 'https://preisrunter.at/api/ranking/today/'
+    }else {
+        apiUrl = 'https://api.preisrunter.net/v1/ranking/today/';
+    }
     axios.get(apiUrl)
         .then(response => {
             res.json(response.data)
