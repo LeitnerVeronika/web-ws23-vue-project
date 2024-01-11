@@ -1,11 +1,10 @@
 <script setup lang="ts">
-
-
 import type {PropType} from "vue";
 import type ProductTypes from "@/components/enums/ProductTypes";
 import type MarketTypes from "@/components/enums/MarketTypes";
 import Market from "@/components/Market.vue";
 import Button from "@/components/Button.vue";
+import {useFavoriteStore} from "@/stores/favorites";
 
 const props = defineProps({
   name: {
@@ -42,6 +41,21 @@ const props = defineProps({
   }
 })
 
+const store = useFavoriteStore();
+
+function addToFavorites(){
+  store.addProduct(props)
+}
+
+const emit = defineEmits();
+
+
+const removeFromFavorites = () => {
+  store.removeProduct(props)
+  // Trigger a custom event named 'remove'
+  emit('remove');
+};
+
 
 </script>
 <template>
@@ -63,22 +77,26 @@ const props = defineProps({
       <div :class="[diffColor]">{{ difference }}</div>
     </div>
     <div v-if="type == 1">
-      <font-awesome-icon :icon="['fas', 'star']"/>
-
-      <Button
+<!--      <font-awesome-icon :icon="['fas', 'star']"/>-->
+<!--      <button @click="removeFromFavorites">Remove</button>-->
+            <Button
           :iconPrefix="'fas'"
-          :iconName="'cart-plus'"
-      />
-      <font-awesome-icon :icon="['fas', 'star']"/>
+          :iconName="'star'"
+          :click-handler="removeFromFavorites"/>
+
+<!--      />-->
+<!--      <font-awesome-icon :icon="['fas', 'star']"/>-->
       <!--      <IconFavorites/>-->
       <!--      <IconDelete/>-->
     </div>
     <div v-else>
       <!--      <IconCart/>-->
+<!--      <button @click="addToFavorites()">Add to fav</button>-->
 
       <Button
-          :iconPrefix="'fas'"
+          :iconPrefix="'far'"
           :iconName="'star'"
+          :click-handler="addToFavorites"
       />
 
       <!--      <Button-->

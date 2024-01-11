@@ -1,4 +1,4 @@
-import {ref, computed, reactive} from 'vue'
+import { reactive} from 'vue'
 import { defineStore } from 'pinia'
 
 export const useFavoriteStore = defineStore('favorites ', () => {
@@ -9,13 +9,13 @@ export const useFavoriteStore = defineStore('favorites ', () => {
     localStorage.setItem('favorites', JSON.stringify(products));
   }
   function removeProduct(data){
-    products.pop(data);
+    products.forEach( (item, index) => {
+      if(item.name == data.name){
+        products.splice(index,1);
+      }
+    });
     localStorage.setItem('favorites', JSON.stringify(products));
   }
 
-  function deleteStorage(){
-    localStorage.removeItem('favorites');
-  }
-
-  return { products, addProduct, removeProduct, deleteStorage}
+  return { products, addProduct, removeProduct}
 })
