@@ -4,7 +4,6 @@ import {useFavoriteStore} from "@/stores/favorites";
 import Navigation from "@/components/Navigation.vue";
 import ProductContainer from "@/components/ProductContainer.vue";
 import ProductTypes from "@/components/enums/ProductTypes";
-import {ref} from "vue";
 
 let localStore = localStorage.getItem('favorites');
 let products = JSON.parse(localStore);
@@ -16,7 +15,6 @@ function deleteStorage(){
 
 </script>
 <template>
-  <Navigation/>
   <ProductContainer :type="ProductTypes.favorites" :data="{products}"/>
   <button @click="deleteStorage()">Clear Favorites</button>
 

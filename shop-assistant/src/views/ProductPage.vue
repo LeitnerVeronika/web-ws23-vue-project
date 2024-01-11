@@ -1,11 +1,9 @@
 <script setup lang="ts">
 
-// import IconMarket from "@/components/icons/IconMarket.vue";
 import HeroImage from "@/components/HeroImage.vue";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
-import Navigation from "@/components/Navigation.vue";
 
 const route = useRoute();
 const market = route.query.market;
@@ -18,7 +16,7 @@ const data = ref(null);
 const loading = ref(false);
 const error = ref(null);
 let products = ref(null);
-let priceDiffPercent = ref(null);
+let difference = ref(null);
 
 onMounted(async () => {
   loading.value = true;
@@ -38,7 +36,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Navigation/>
   <HeroImage/>
   <div v-if="loading">Loading...</div>
   <div v-else-if="error">{{ error }}</div>
@@ -46,13 +43,14 @@ onMounted(async () => {
     <div v-if="data !== null">
       <section>
         <h1 class="product-header">{{ products[0].productName }}</h1>
-<!--        <IconMarket productName="{{products[0].productMarket}}"/>-->
+        <div class="market-container">
+          <Market :text="market"/>
+        </div>
         <div>
           {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
         </div>
         <div v-if="difference !== undefined">
-          <div v-if="difference.startsWith('-')" class="neg-dif">{{ priceDiffPercent }}</div>
-        <div v-if="difference.startsWith('+')" class="pos-dif">{{ priceDiffPercent }}</div>
+          <div :class="[products[0].differenceColor]">{{ products[0].differencePercent}}%</div>
         </div>
       </section>
     </div>
@@ -68,11 +66,11 @@ section {
   color: var(--color-primary);
 }
 
-.neg-dif {
+.red {
   color: darkred;
 }
 
-.pos-dif {
+.green {
   color: darkgreen;
 }
 </style>

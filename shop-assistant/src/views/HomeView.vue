@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import Navigation from "@/components/Navigation.vue";
+import HeroImage from "@/components/HeroImage.vue";
+import Heading from "@/components/Heading.vue";
+import SearchBar from "@/components/SearchBar.vue";
 import ProductTypes from "../components/enums/ProductTypes";
 import ProductContainer from "@/components/ProductContainer.vue";
 import axios from "axios";
@@ -24,7 +26,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Navigation/>
+  <HeroImage />
+  <div class="content">
+    <div class="flex-container">
+      <Heading headingText="Offer of the day" />
+      <SearchBar />
+    </div>
+  </div>
+  <!-- <HeroImage imgSrc="../images/strawberries.jpg"/> -->
   <main>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
@@ -35,55 +44,3 @@ onMounted(async () => {
     </div>
   </main>
 </template>
-
-<!--
-  Buttons
-  <Button
-        :iconPrefix="'fas'"
-        :iconName="'cart-plus'"
-        :clickHandler="handleCustomClick"
-  />
-
-
-  <script setup>
-  import Button from "@/components/Button.vue";
-
-  const handleCustomClick = () => {
-    // add logic for button click
-    console.log('Custom function has been called!');
-  };
-  </script>
-
--->
-
-<!--
-  Icons:
-
-  <font-awesome-icon :icon="['fas', 'cart-plus']" />
-
-  filled star = fas; unfilled star = far
-  <font-awesome-icon :icon="['fas', 'star']" />
-  <font-awesome-icon :icon="['far', 'star']" />
-
-  <font-awesome-icon :icon="['fas', 'angle-down']" />
-  <font-awesome-icon :icon="['fas', 'angle-up']" />
-  <font-awesome-icon :icon="['fas', 'bell']" />
-  <font-awesome-icon :icon="['fas', 'times']" />
-
--->
-
-<!--
-  Market:
-  <Market :text="'Billa'" :class-productName="'billa'" />
-  <Market :text="'Spar'" :class-productName="'spar'" />
-  <Market :text="'dm'" :class-productName="'dm'" />
-  <Market :text="'Bipa'" :class-productName="'bipa'" />
-  <Market :text="'Hofer'" :class-productName="'hofer'" />
-  <Market :text="'Lidl'" :class-productName="'lidl'" />
-  <Market :text="'Metro'" :class-productName="'metro'" />
-  <Market :text="'MPreis'" :class-productName="'mpreis'" />
-  <Market :text="'Müller'" :class-productName="'mueller'" />
-  <Market :text="'Penny'" :class-productName="'penny'" />
-  <Market :text="'Unimarkt'" :class-productName="'unimarkt'" />
-  <Market :text="'Rewe'" :class-productName="'rewe'" />
--->

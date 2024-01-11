@@ -4,26 +4,27 @@
 import type {PropType} from "vue";
 import type ProductTypes from "@/components/enums/ProductTypes";
 import type MarketTypes from "@/components/enums/MarketTypes";
-import { useFavoriteStore} from "@/stores/favorites";
+import Market from "@/components/Market.vue";
+import Button from "@/components/Button.vue";
 
 const props = defineProps({
-  productName: {
+  name: {
     type: String,
     required: true
   },
-  productMarket: {
+  market: {
     type: Number as PropType<MarketTypes>,
     required: true
   },
-  priceAfter: {
+  priceNew: {
     type: Number,
     required: true
   },
-  priceBefore: {
+  priceOld: {
     type: Number,
     required: true
   },
-  priceDiffPercent: {
+  difference: {
     type: String,
     required: true
   },
@@ -31,64 +32,60 @@ const props = defineProps({
     type: Number as PropType<ProductTypes>,
     required: false
   },
-  search:{
+  search: {
     type: Boolean,
-    required:false
+    required: false
+  },
+  diffColor: {
+    type: String,
+    required: false,
   }
 })
-
-
-let diff = props.priceDiffPercent
-diff = diff.split(/[()]/);
-let diffString = diff[1]
-
-const store = useFavoriteStore();
-
-function addToCart(){
-  console.log(props)
-  store.addProduct(props);
-}
 
 
 </script>
 <template>
   <section class="grid-container">
-    <router-link class="product-link" :to="'/product/' + productName + '?productMarket=' + productMarket + '&productName=' + productName">
-      <h2 class="table-productName">{{ productName }}</h2>
+    <router-link class="product-link" :to="'/product/' + name + '?market=' + market + '&productName=' + name">
+      <h2 class="table-productName">{{ name }}</h2>
     </router-link>
-    <IconMarket name="{{productMarket}}"/>
+    <Market :text="market"/>
     <div v-if="search">
-      {{ priceAfter }}€ | <s>{{ priceBefore }}€</s>
+      {{ priceNew }}€<span v-if="difference !== 0">  |  <s>{{ priceOld }}€ </s></span>
     </div>
     <div v-else>
-      {{ priceAfter }}| <s>{{ priceBefore }}</s>
+      {{ priceNew }}<span v-if="difference !== 0">  |  <s>{{ priceOld }}</s></span>
     </div>
     <div v-if="search">
-      <div v-if="diffString !== undefined">
-      <div v-if="diffString.startsWith('-')" class="neg-dif">{{ diffString }}</div>
-      <div v-if="diffString.startsWith('+')" class="pos-dif">{{ diffString }}</div>
-      </div>
+      <div :class="[diffColor]">{{ difference }} %</div>
     </div>
-      <div v-else></div>
     <div v-else>
-      <div v-if="priceDiffPercent.startsWith('-')" class="neg-dif">{{ priceDiffPercent }}</div>
-      <div v-if="priceDiffPercent.startsWith('+')" class="pos-dif">{{ priceDiffPercent }}</div>
-    </div>
-    <div>
-      <button @click="addToCart()">Add to cart</button>
+      <div :class="[diffColor]">{{ difference }}</div>
     </div>
     <div v-if="type == 1">
-<!--      <IconFavorites/>-->
-<!--      <IconCart/>-->
-<!--      <IconAlert/>-->
-    </div>
-    <div v-else-if="type == 2">
-<!--      <IconFavorites/>-->
-<!--      <IconDelete/>-->
+      <font-awesome-icon :icon="['fas', 'star']"/>
+
+      <Button
+          :iconPrefix="'fas'"
+          :iconName="'cart-plus'"
+      />
+      <font-awesome-icon :icon="['fas', 'star']"/>
+      <!--      <IconFavorites/>-->
+      <!--      <IconDelete/>-->
     </div>
     <div v-else>
-<!--      <IconCart/>-->
-<!--      <IconFavorites/>-->
+      <!--      <IconCart/>-->
+
+      <Button
+          :iconPrefix="'fas'"
+          :iconName="'star'"
+      />
+
+      <!--      <Button-->
+      <!--          :iconPrefix="'fas'"-->
+      <!--          :iconName="'cart-plus'"-->
+      <!--      <font-awesome-icon :icon="['fas', 'star']" />-->
+      <!--      <IconFavorites/>-->
     </div>
   </section>
 
@@ -105,11 +102,11 @@ function addToCart(){
   color: var(--color-primary);
 }
 
-.neg-dif {
+.red {
   color: darkred;
 }
 
-.pos-dif {
+.green {
   color: darkgreen;
 }
 
