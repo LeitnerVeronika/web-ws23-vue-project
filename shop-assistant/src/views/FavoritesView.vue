@@ -8,7 +8,7 @@ let products = JSON.parse(localStore);
 
 </script>
 <template>
-  <ProductContainer :type="ProductTypes.favorites" :data="{products}" :fav="true"/>
+  <ProductContainer :type="ProductTypes.favorites" :data="{products}"/>
 </template>
 
 <style>
