@@ -30,7 +30,7 @@ onMounted(async () => {
   <div class="content">
     <div class="flex-container">
       <Heading headingText="Offer of the day" />
-      <SearchBar />
+      <SearchBar homepage/>
     </div>
   </div>
   <!-- <HeroImage imgSrc="../images/strawberries.jpg"/> -->
