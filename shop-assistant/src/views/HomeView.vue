@@ -39,7 +39,7 @@ onMounted(async () => {
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <div v-if="products !== null">
-        <ProductContainer :type="ProductTypes.default" :data="{products}" :search="false"/>
+        <ProductContainer :type="ProductTypes.default" :data="{products}"/>
       </div>
     </div>
   </main>

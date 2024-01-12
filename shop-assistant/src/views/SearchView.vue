@@ -55,7 +55,7 @@
   <div v-else-if="error">{{ error }}</div>
   <div v-else>
     <div v-if="data !== null">
-      <ProductContainer :type="ProductTypes.default" :data="{products}" :search="true"></ProductContainer>
+      <ProductContainer :type="ProductTypes.search" :data="{products}"></ProductContainer>
     </div>
   </div>
 </template>
