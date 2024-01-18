@@ -33,7 +33,6 @@ onMounted(async () => {
       <SearchBar />
     </div>
   </div>
-  <!-- <HeroImage imgSrc="../images/strawberries.jpg"/> -->
   <main>
 
     <div v-if="loading">Loading...</div>
