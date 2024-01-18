@@ -46,19 +46,19 @@ const config: PlaywrightTestConfig = {
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      productName: 'chromium',
       use: {
         ...devices['Desktop Chrome']
       }
     },
     {
-      name: 'firefox',
+      productName: 'firefox',
       use: {
         ...devices['Desktop Firefox']
       }
     },
     {
-      name: 'webkit',
+      productName: 'webkit',
       use: {
         ...devices['Desktop Safari']
       }
@@ -66,13 +66,13 @@ const config: PlaywrightTestConfig = {
 
     /* Test against mobile viewports. */
     // {
-    //   name: 'Mobile Chrome',
+    //   productName: 'Mobile Chrome',
     //   use: {
     //     ...devices['Pixel 5'],
     //   },
     // },
     // {
-    //   name: 'Mobile Safari',
+    //   productName: 'Mobile Safari',
     //   use: {
     //     ...devices['iPhone 12'],
     //   },
@@ -80,13 +80,13 @@ const config: PlaywrightTestConfig = {
 
     /* Test against branded browsers. */
     // {
-    //   name: 'Microsoft Edge',
+    //   productName: 'Microsoft Edge',
     //   use: {
     //     channel: 'msedge',
     //   },
     // },
     // {
-    //   name: 'Google Chrome',
+    //   productName: 'Google Chrome',
     //   use: {
     //     channel: 'chrome',
     //   },

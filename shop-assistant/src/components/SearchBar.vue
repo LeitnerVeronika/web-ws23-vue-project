@@ -1,9 +1,34 @@
 <script setup lang="ts">
 
+import {ref} from "vue";
+import Button from "@/components/Button.vue";
+import router from "@/router";
+const emit = defineEmits();
+
+const props = defineProps({
+  homepage:{
+    type: Boolean,
+    required: false,
+  }
+})
+
+let searchString = ref('');
+
+const searchEvent = () =>{
+  if(props.homepage){
+    router.push({path: '/productSearch', query: {query: searchString.value}})
+  }
+  emit('search', searchString.value)
+}
+
 </script>
 
 <template>
-<input class="search" type="text" placeholder=" search for product">
+<input class="search" type="text" placeholder=" search for product" v-model="searchString">
+  <Button
+      :iconPrefix="'fas'"
+      :iconName="'magnifying-glass'"
+      :click-handler="searchEvent"/>
 </template>
 
 <style scoped>

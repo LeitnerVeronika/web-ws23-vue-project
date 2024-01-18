@@ -1,15 +1,15 @@
+<script setup lang="ts">
+import ProductTypes from "@/components/enums/ProductTypes";
+import ProductContainer from "@/components/ProductContainer.vue";
+
+let localStore = localStorage.getItem('cart');
+let products = JSON.parse(localStore);
+</script>
+
+
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <ProductContainer :type="ProductTypes.cart" :data="{products}"/>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
 </style>

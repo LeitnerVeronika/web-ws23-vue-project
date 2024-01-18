@@ -10,27 +10,28 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      productName: 'home',
       component: HomeView
     },
     {
       path: '/favorites',
-      name: 'favorites',
+      productName: 'favorites',
       component: FavoritesView
     },
     {
       path: '/cart',
-      name: 'cart',
+      productName: 'cart',
       component: CartView
     },
     {
       path: '/productSearch',
-      name: 'productSearch',
-      component: SearchView
+      productName: 'productSearch',
+      component: SearchView,
+      props: route => ( { query: route.query.q } )
     },
     {
-      path: '/product/:name',
-      name: 'product',
+      path: '/product/:productName',
+      productName: 'product',
       component: ProductPage
     }
   ]

@@ -1,15 +1,16 @@
+<script setup lang="ts">
+import ProductContainer from "@/components/ProductContainer.vue";
+import ProductTypes from "@/components/enums/ProductTypes";
+
+let localStore = localStorage.getItem('favorites');
+let products = JSON.parse(localStore);
+
+
+</script>
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <ProductContainer :type="ProductTypes.favorites" :data="{products}"/>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+
 </style>

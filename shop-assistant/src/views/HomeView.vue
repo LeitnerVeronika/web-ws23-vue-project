@@ -30,16 +30,15 @@ onMounted(async () => {
   <div class="content">
     <div class="flex-container">
       <Heading headingText="Offer of the day" />
-      <SearchBar />
+      <SearchBar homepage/>
     </div>
   </div>
   <main>
-
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <div v-if="products !== null">
-        <ProductContainer :type="ProductTypes.default" :data="{products}" :search="false"/>
+        <ProductContainer :type="ProductTypes.default" :data="{products}"/>
       </div>
     </div>
   </main>
