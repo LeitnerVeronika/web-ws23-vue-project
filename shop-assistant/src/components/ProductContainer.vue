@@ -40,6 +40,7 @@ const updateCartProductsFromLocalStorage = () => {
   if (props.type == ProductTypes.cart) {
     let localStore = localStorage.getItem('cart');
     products.value = JSON.parse(localStore) || [];
+    products.value.sort((a, b) => a.market.localeCompare(b.market));
   }
 };
 
@@ -83,5 +84,6 @@ const handleCheck = (prodName, isChecked) => {
 <style scoped>
 .product-table {
   margin: 0 1.3em;
+  font-family: 'DM Serif Display', sans-serif;
 }
 </style>

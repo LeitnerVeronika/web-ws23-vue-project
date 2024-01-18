@@ -4,9 +4,11 @@ import HeroImage from "@/components/HeroImage.vue";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
+import Market from "@/components/Market.vue";
+
 
 const route = useRoute();
-const market = route.query.market;
+let market = route.query.market;
 let nameStr = route.query.productName
 nameStr = nameStr.split(" ");
 let productName = nameStr.join('+');
@@ -17,6 +19,7 @@ const loading = ref(false);
 const error = ref(null);
 let products = ref(null);
 let difference = ref(null);
+// let market = ref(null)
 
 onMounted(async () => {
   loading.value = true;
@@ -30,6 +33,7 @@ onMounted(async () => {
     products = data.value.products;
     difference = products[0].differenceString.split(/[()]/);
     difference = difference[1]
+    market = products[0].productMarket;
   }
 });
 
@@ -44,7 +48,7 @@ onMounted(async () => {
       <section>
         <h1 class="product-header">{{ products[0].productName }}</h1>
         <div class="market-container">
-          <Market :text="market"/>
+          <Market :text="market"></Market>
         </div>
         <div>
           {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
@@ -60,10 +64,17 @@ onMounted(async () => {
 <style scoped>
 section {
   text-align: center;
+
 }
 
 .product-header {
   color: var(--color-primary);
+}
+.market-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.2em;
 }
 
 .red {

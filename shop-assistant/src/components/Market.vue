@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import {watchEffect} from "vue";
+
 const props = defineProps({
   text: {
     type: String,
@@ -8,6 +10,12 @@ const props = defineProps({
 });
 
 let className = props.text?.toLowerCase()
+
+
+// used to change the css-class for removed products
+watchEffect(() => {
+  className = props.text?.toLowerCase()
+});
 </script>
 
 <template>
