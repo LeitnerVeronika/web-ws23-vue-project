@@ -18,11 +18,11 @@ const props = defineProps({
     required: true
   },
   priceNew: {
-    type: Number,
+    type: String,
     required: true
   },
   priceOld: {
-    type: Number,
+    type: String,
     required: true
   },
   difference: {
@@ -51,9 +51,9 @@ function addToFavorites() {
   favStore.addProduct(props)
 }
 
+/** remove product from store and triggers a custom event named 'remove' to dynamically load products */
 const removeFromFavorites = () => {
   favStore.removeProduct(props)
-  // Trigger a custom event named 'remove'
   emit('remove');
 };
 
@@ -62,15 +62,15 @@ const cartStore = useCartStore();
 function addToCart() {
   console.log("Add Cart")
   cartStore.addProduct(props)
-
 }
 
+/** remove product from store and triggers a custom event named 'remove' to dynamically load products */
 const removeFromCart = () => {
   cartStore.removeProduct(props)
-  // Trigger a custom event named 'remove'
   emit('remove');
 };
 
+/** watch the checkbox and triggers a custom event named 'checked' to update the product props inside the ProductContainer */
 watch(isCheckedComp, () => {
   emit('checked', props.name, isCheckedComp.value)
 })
@@ -96,6 +96,7 @@ watch(isCheckedComp, () => {
     <div v-else>
       <div :class="[diffColor]">{{ difference }}</div>
     </div>
+    <!-- different icons for the different pages -->
     <div v-if="type == ProductTypes.favorites">
       <Button
           :iconPrefix="'fas'"
@@ -150,16 +151,17 @@ watch(isCheckedComp, () => {
   color: var(--color-primary);
 }
 
+.product-link {
+  font-size: medium;
+  margin: 0;
+}
+
+/** classes dynamically match to differentColor */
 .red {
   color: darkred;
 }
 
 .green {
   color: darkgreen;
-}
-
-.product-link {
-  font-size: medium;
-  margin: 0;
 }
 </style>
