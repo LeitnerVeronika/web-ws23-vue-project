@@ -18,6 +18,13 @@ const props = defineProps({
 });
 
 const products = ref([]);
+const sortValue = ref('');
+
+
+
+onMounted(() => {
+  products.value = [...props.data.products];
+});
 
 // Function to update products from localStorage
 const updateFavoriteProductsFromLocalStorage = () => {
@@ -61,12 +68,46 @@ const handleCheck = (prodName, isChecked) => {
   });
 };
 
+const handleSortEvent = (value) => {
+  sortValue.value = value;
+  sortProducts();
+};
+
+const sortProducts = () => {
+  if (sortValue.value) {
+    let sortField = (props.type === ProductTypes.cart || props.type === ProductTypes.favorites) ? 'name' : 'productName';
+    let priceField;
+    if (props.type === ProductTypes.cart || props.type === ProductTypes.favorites) {
+      priceField = 'priceNew';
+    } else {
+      priceField = (props.type === ProductTypes.search) ? 'currentPrice' : 'priceAfter';
+    }
+
+
+    if (sortValue.value.includes('name')) {
+      products.value = [...products.value].sort((a, b) => {
+        let fa = a[sortField].toLowerCase(), fb = b[sortField].toLowerCase();
+        return (sortValue.value === 'name-up') ? fa.localeCompare(fb) : fb.localeCompare(fa);
+      });
+    } else if (sortValue.value.includes('price')) {
+      products.value = [...products.value].sort((a, b) => {
+        let fa = parseFloat(a[priceField].toString().replace(/[^0-9.,]/g, '').replace(',', '.'));
+        let fb = parseFloat(b[priceField].toString().replace(/[^0-9.,]/g, '').replace(',', '.'));
+        return (sortValue.value === 'price-up') ? fa - fb : fb - fa;
+      });
+    }
+
+  }
+};
+
+
+
 </script>
 
 <template>
   <section class="product-table">
-    <TableHeader/>
-    <Products v-if="type == ProductTypes.search" v-for="product in data.products" :difference="product.differencePercent"
+    <TableHeader @sortEvent="handleSortEvent" />
+    <Products v-if="type == ProductTypes.search" v-for="product in products" :difference="product.differencePercent"
               :price-new="product.currentPrice" :price-old="product.previousPrice" :market="product.productMarket"
               :name="product.productName" :type="type" :search="search" :diffColor="product.differenceColor" />
     <Products v-else-if="type == ProductTypes.favorites" v-for="product in products" :difference="product.difference"
@@ -75,7 +116,7 @@ const handleCheck = (prodName, isChecked) => {
     <Products v-else-if="type == ProductTypes.cart" v-for="product in products" :difference="product.difference"
               :price-new="product.priceNew" :price-old="product.priceOld"
               :market="product.market" :name="product.name" :type="type" :diffColor="product.diffColor" :is-checked="product.isChecked" @remove="handleCartRemove" @checked="handleCheck"/>
-    <Products v-else v-for="product in data.products" :difference="product.priceDiffPercent"
+    <Products v-else v-for="product in products" :difference="product.priceDiffPercent"
               :price-new="product.priceAfter" :price-old="product.priceBefore"
               :market="product.productMarket" :name="product.productName" :type="type" :diffColor="product.color"/>
   </section>
