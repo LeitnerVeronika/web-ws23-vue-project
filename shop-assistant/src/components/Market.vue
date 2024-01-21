@@ -71,4 +71,7 @@ export default {
   background-color: #8B0000;
 }
 
+.aldinordde {
+  background-color: #00008B;
+}
 </style>
