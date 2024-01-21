@@ -15,7 +15,7 @@ export default {
 
 <style scoped>
 .market-container {
-  max-width: 90px;
+  max-width: 100px;
   text-align: center;
   padding: 2px;
   text-transform: uppercase;
