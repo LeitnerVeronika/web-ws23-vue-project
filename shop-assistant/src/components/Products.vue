@@ -90,10 +90,11 @@ watch(isCheckedComp, () => {
     <div v-else>
       {{ priceNew }}<span v-if="difference !== 0">  |  <s>{{ priceOld }}</s></span>
     </div>
-    <div v-if="!difference.toString().includes('%')">
+<!--  for new API call  <div v-if="!difference.toString().includes('%')">
       <div :class="[diffColor]">{{ difference }} %</div>
     </div>
-    <div v-else>
+    <div v-else>-->
+      <div>
       <div :class="[diffColor]">{{ difference }}</div>
     </div>
     <div v-if="type == ProductTypes.favorites">
