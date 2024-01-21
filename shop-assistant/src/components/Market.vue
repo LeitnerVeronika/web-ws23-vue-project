@@ -24,20 +24,9 @@ watchEffect(() => {
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    text: String,
-    className: String,
-  },
-};
-</script>
-
 <style scoped>
 .market-container {
-  max-width: 100px;
-  max-width: 100px;
-  min-width: 80px;
+  width: 100px;
   max-height: 30px;
   text-align: center;
   padding: 2px;
