@@ -77,12 +77,10 @@ a:hover {
   }
 }
 
-@media (max-width: 460px) {
+@media (max-width: 550px) {
   nav {
     margin: 0;
-  }
-  .logoLink {
-    font-size: large;
+    justify-content: space-between;
   }
   .burger-menu {
     margin: 0 2rem;
