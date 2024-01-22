@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
+import axios from "axios";
 import HeroImage from "@/components/HeroImage.vue";
 import Heading from "@/components/Heading.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import ProductTypes from "../components/enums/ProductTypes";
 import ProductContainer from "@/components/ProductContainer.vue";
-import axios from "axios";
-import {onMounted, ref} from "vue";
+import Filter from '@/components/Filter.vue';
 
-const products = ref(null);
+const originalProducts = ref([]);
+const filteredProducts = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
@@ -15,7 +17,7 @@ onMounted(async () => {
   loading.value = true;
   try {
     const response = await axios.get('http://localhost:3000/api/today');
-    products.value = response.data;
+    originalProducts.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
   } finally {
@@ -23,7 +25,13 @@ onMounted(async () => {
   }
 });
 
+console.log(filteredProducts);
+
+function handleFilteredProducts(filtered) {
+  filteredProducts.value = filtered;
+}
 </script>
+
 
 <template>
   <HeroImage />
@@ -31,16 +39,21 @@ onMounted(async () => {
     <div class="flex-container">
       <Heading headingText="Offer of the day" />
       <SearchBar homepage/>
+      <Filter :originalProducts="originalProducts" :type="ProductTypes.default" @filtered="handleFilteredProducts" />
     </div>
   </div>
-  <!-- <HeroImage imgSrc="../images/strawberries.jpg"/> -->
   <main>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <div v-if="products !== null">
-        <ProductContainer :type="ProductTypes.default" :data="{products}"/>
+      <div v-if="filteredProducts && filteredProducts.length > 0">
+        <ProductContainer :key="filteredProducts.length" :type="ProductTypes.default" :data="{products: filteredProducts}" />
       </div>
+      <div v-else-if="filteredProducts.length == 0">
+        <ProductContainer :type="ProductTypes.default" :data="{products: originalProducts}" />
+      </div>
+      <div v-else>Keine Produkte gefunden.</div>
     </div>
   </main>
 </template>
+

@@ -57,6 +57,23 @@ app.get('/api/search', (req, res) => {
 
 });
 
+app.get('/api/search/markets', (req, res) => {
+    let apiUrl;
+    if(isDepricatedURL){
+        apiUrl = 'https://preisrunter.at/api/search/markets/'
+    }else {
+        apiUrl = 'https://api.preisrunter.net/v1/shops/';
+    }
+    axios.get(apiUrl)
+        .then(response => {
+            res.json(response.data)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+});
+
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });

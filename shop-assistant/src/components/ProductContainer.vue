@@ -4,7 +4,7 @@ import Products from "@/components/Products.vue";
 import ProductTypes from "@/components/enums/ProductTypes";
 import TableHeader from "@/components/TableHeader.vue";
 import type {PropType} from "vue";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch, watchEffect} from "vue";
 
 const props = defineProps({
   type: {
@@ -21,9 +21,14 @@ const products = ref([]);
 const sortValue = ref('');
 
 
+watch(() => props.data.products, (newProducts) => {
+  products.value = Array.isArray(newProducts) ? newProducts : [];
+}, { immediate: true });
+
 
 onMounted(() => {
   products.value = [...props.data.products];
+  console.log('product container: ', products.value);
 });
 
 // Function to update products from localStorage
