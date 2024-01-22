@@ -6,8 +6,10 @@
   import ProductContainer from "@/components/ProductContainer.vue";
   import SearchBar from "@/components/SearchBar.vue";
   import {useRoute} from "vue-router";
+  import Filter from '@/components/Filter.vue';
 
   const data = ref(null);
+  const filteredProducts = ref([]);
   const loading = ref(false);
   const error = ref(null);
   let products = ref(null);
@@ -15,6 +17,8 @@
 
   const route = useRoute();
   searchString = route.query.query;
+
+
 
   onMounted(async () => {
     loading.value = true;
@@ -27,6 +31,8 @@
       loading.value = false;
       products = data.value.products;
     }
+    filteredProducts.value = products.value;
+    console.log(filteredProducts);
   });
 
   const searchForProducts = (search) => {
@@ -45,19 +51,33 @@
       loading.value = false;
       products = data.value.products;
     }
+    filteredProducts.value = products.value;
+    console.log(filteredProducts);
   });
+
+  function handleFilteredProducts(filtered) {
+    filteredProducts.value = filtered;
+  }
 
 </script>
 
 <template>
   <SearchBar @search="searchForProducts"/>
-  <div v-if="loading">Loading...</div>
-  <div v-else-if="error">{{ error }}</div>
-  <div v-else>
-    <div v-if="data !== null">
-      <ProductContainer :type="ProductTypes.search" :data="{products}"></ProductContainer>
+  <Filter :originalProducts="products" :type="ProductTypes.search" @filtered="handleFilteredProducts" />
+  <main>
+    <div v-if="loading">Loading...</div>
+    <div v-else-if="error">{{ error }}</div>
+    <div v-else>
+      <ProductContainer v-if="!filteredProducts"
+                        :type="ProductTypes.search"
+                        :data="{ products }" />
+      <ProductContainer v-if="filteredProducts"
+                        :type="ProductTypes.search"
+                        :data="{ products: filteredProducts }" />
+
+      <div v-else>Keine Produkte gefunden.</div>
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped>

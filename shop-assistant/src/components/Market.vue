@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import {watchEffect} from "vue";
+
 const props = defineProps({
   text: {
     type: String,
@@ -8,6 +10,12 @@ const props = defineProps({
 });
 
 let className = props.text?.toLowerCase()
+
+
+// used to change the css-class for removed products
+watchEffect(() => {
+  className = props.text?.toLowerCase()
+});
 </script>
 
 <template>
@@ -18,8 +26,7 @@ let className = props.text?.toLowerCase()
 
 <style scoped>
 .market-container {
-  max-width: 100px;
-  min-width: 80px;
+  width: 100px;
   max-height: 30px;
   text-align: center;
   padding: 2px;
@@ -76,4 +83,7 @@ let className = props.text?.toLowerCase()
   background-color: #8B0000;
 }
 
+.aldinordde {
+  background-color: #00008B;
+}
 </style>

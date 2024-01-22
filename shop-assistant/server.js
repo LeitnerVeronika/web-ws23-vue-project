@@ -32,11 +32,37 @@ app.get('/api/search', (req, res) => {
     let productName = searchString.join('+');
     const marketString = req.query.markets;
     let apiUrl;
+    if(isDepricatedURL) {
+        if (marketString === "undefined") {
+            apiUrl = 'https://preisrunter.at/api/search/products/?q=' + productName;
+        } else {
+            apiUrl = 'https://preisrunter.at/api/search/products/?q=' + productName + '&shops=' + marketString;
+        }
+    }
+    else {
+        if (marketString === "undefined") {
+            apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName;
+        } else {
+            apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName + '&shops=' + marketString;
+        }
+    }
+    axios.get(apiUrl)
+        .then(response => {
+            console.log(response.data)
+            res.json(response.data)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
 
-    if(marketString === "undefined"){
-        apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName;
+});
+
+app.get('/api/search/markets', (req, res) => {
+    let apiUrl;
+    if(isDepricatedURL){
+        apiUrl = 'https://preisrunter.at/api/search/markets/'
     }else {
-        apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName + '&shops=' + marketString;
+        apiUrl = 'https://api.preisrunter.net/v1/shops/';
     }
     axios.get(apiUrl)
         .then(response => {

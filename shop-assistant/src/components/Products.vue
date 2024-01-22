@@ -37,7 +37,7 @@ const props = defineProps({
     type: String,
     required: false,
   },
-  isChecked:{
+  isChecked: {
     type: Boolean,
     required: false
   }
@@ -49,7 +49,6 @@ let isCheckedComp = ref()
 
 function addToFavorites() {
   favStore.addProduct(props)
-
 }
 
 const removeFromFavorites = () => {
@@ -70,12 +69,11 @@ const removeFromCart = () => {
   cartStore.removeProduct(props)
   // Trigger a custom event named 'remove'
   emit('remove');
-
 };
+
 watch(isCheckedComp, () => {
   emit('checked', props.name, isCheckedComp.value)
 })
-
 
 </script>
 <template>
@@ -86,16 +84,17 @@ watch(isCheckedComp, () => {
       <h2 class="table-productName">{{ name }}</h2>
     </router-link>
     <Market :text="market"/>
-    <div v-if="type == ProductTypes.search || type == ProductTypes.cart">
+    <div v-if="!priceOld.toString().includes('€')">
       {{ priceNew }}€<span v-if="difference !== 0">  |  <s>{{ priceOld }}€ </s></span>
     </div>
     <div v-else>
       {{ priceNew }}<span v-if="difference !== 0">  |  <s>{{ priceOld }}</s></span>
     </div>
-    <div v-if="type == ProductTypes.search || type == ProductTypes.cart">
+<!--  for new API call  <div v-if="!difference.toString().includes('%')">
       <div :class="[diffColor]">{{ difference }} %</div>
     </div>
-    <div v-else>
+    <div v-else>-->
+      <div>
       <div :class="[diffColor]">{{ difference }}</div>
     </div>
     <div v-if="type == ProductTypes.favorites">
@@ -144,7 +143,7 @@ watch(isCheckedComp, () => {
   grid-template-columns: 0.1fr 4fr 0.5fr 1fr 1fr 0.5fr;
 }
 
-.crossed{
+.crossed {
   text-decoration: line-through;
 }
 
