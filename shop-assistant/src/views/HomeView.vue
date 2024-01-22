@@ -22,10 +22,13 @@ onMounted(async () => {
     error.value = 'Error fetching data';
   } finally {
     loading.value = false;
+
   }
+  filteredProducts.value = originalProducts.value;
+  console.log(filteredProducts);
 });
 
-console.log(filteredProducts);
+
 
 function handleFilteredProducts(filtered) {
   filteredProducts.value = filtered;
@@ -46,12 +49,9 @@ function handleFilteredProducts(filtered) {
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <div v-if="filteredProducts && filteredProducts.length > 0">
-        <ProductContainer :key="filteredProducts.length" :type="ProductTypes.default" :data="{products: filteredProducts}" />
-      </div>
-      <div v-else-if="filteredProducts.length == 0">
-        <ProductContainer :type="ProductTypes.default" :data="{products: originalProducts}" />
-      </div>
+      <ProductContainer v-if="filteredProducts.length > 0"
+                        :type="ProductTypes.default"
+                        :data="{ products: filteredProducts }" />
       <div v-else>Keine Produkte gefunden.</div>
     </div>
   </main>
