@@ -38,13 +38,11 @@ function handleFilteredProducts(filtered) {
 
 <template>
   <HeroImage />
-  <div class="content">
     <div class="flex-container">
       <Heading headingText="Offer of the day" />
       <SearchBar homepage/>
       <Filter :originalProducts="originalProducts" :type="ProductTypes.default" @filtered="handleFilteredProducts" />
     </div>
-  </div>
   <main>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>

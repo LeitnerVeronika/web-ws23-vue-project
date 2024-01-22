@@ -12,4 +12,9 @@
   height: 45vh;
   object-fit: cover;
 }
+@media (max-width: 460px) {
+  .responsive-image {
+    display: none;
+  }
+}
 </style>
