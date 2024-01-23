@@ -15,7 +15,12 @@ defineProps<{
   font-size: x-large;
   color: var(--color-primary);
 }
-@media (min-width: 1025px) {
+@media (min-width: 460px) {
+  .heading1 {
+    margin: 0 1rem;
+  }
+}
+@media (min-width: 1024px) {
   .heading1 {
     font-size: xx-large;
   }
