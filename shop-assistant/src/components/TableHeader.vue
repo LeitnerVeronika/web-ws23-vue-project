@@ -51,7 +51,6 @@ const sortEvent = (sortValue) => {
 }
 .table-productName{
   color: var(--color-primary);
-
 }
 
 .productName-container {

@@ -129,7 +129,12 @@ const sortProducts = () => {
 
 <style scoped>
 .product-table {
-  margin: 0 1.3em;
+  margin: 0;
   font-family: 'DM Serif Display', sans-serif;
+}
+@media (min-width: 460px) {
+  .product-table {
+    margin: 0 1.3em;
+  }
 }
 </style>

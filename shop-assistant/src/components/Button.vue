@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <button @click="handleClick" class="custom-button">
     <font-awesome-icon :icon="[iconPrefix, iconName]" />
@@ -23,6 +24,7 @@ export default {
 
 <style scoped>
 .custom-button {
+  cursor: pointer;
   border: none;
 }
 </style>
