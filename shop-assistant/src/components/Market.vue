@@ -26,13 +26,19 @@ watchEffect(() => {
 
 <style scoped>
 .market-container {
-  width: 100px;
-  max-height: 30px;
+  width: 6.3em;
+  max-height: 1.9em;
   text-align: center;
   padding: 2px;
   text-transform: uppercase;
+  font-size: 0.75rem;
   color: white;
   border-radius: 8px;
+}
+@media (min-width: 460px) {
+  .market-container {
+    font-size: 1rem;
+  }
 }
 
 .billa {
