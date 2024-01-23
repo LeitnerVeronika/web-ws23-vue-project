@@ -1,12 +1,13 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import type {PropType} from "vue";
-import {ref, watch} from "vue";
+import type { PropType } from "vue";
+import { ref, watch } from "vue";
 import ProductTypes from "@/components/enums/ProductTypes";
 import type MarketTypes from "@/components/enums/MarketTypes";
 import Market from "@/components/Market.vue";
 import Button from "@/components/Button.vue";
-import {useFavoriteStore} from "@/stores/favorites";
-import {useCartStore} from "@/stores/shoppingcart";
+import { useFavoriteStore } from "@/stores/favorites";
+import { useCartStore } from "@/stores/shoppingcart";
 
 const props = defineProps({
   name: {
@@ -77,63 +78,39 @@ watch(isCheckedComp, () => {
 
 </script>
 <template>
-  <section class="grid-container" :class="{crossed: isChecked}">
-    <input v-if="type == ProductTypes.cart" type="checkbox" v-model="isCheckedComp"/>
+  <section class="grid-container" :class="{ crossed: isChecked }">
+    <input v-if="type == ProductTypes.cart" type="checkbox" v-model="isCheckedComp" />
     <div v-else></div>
     <router-link class="product-link" :to="'/product/' + name + '?market=' + market + '&productName=' + name">
       <h2 class="table-productName">{{ name }}</h2>
     </router-link>
-    <Market :text="market"/>
+    <Market :text="market" />
     <div v-if="!priceOld.toString().includes('€')">
-      {{ priceNew }}€<span v-if="difference !== 0">  |  <s>{{ priceOld }}€ </s></span>
+      {{ priceNew }}€<span v-if="difference !== 0"> | <s>{{ priceOld }}€ </s></span>
     </div>
     <div v-else>
-      {{ priceNew }}<span v-if="difference !== 0">  |  <s>{{ priceOld }}</s></span>
+      {{ priceNew }}<span v-if="difference !== 0"> | <s>{{ priceOld }}</s></span>
     </div>
-<!--  for new API call  <div v-if="!difference.toString().includes('%')">
+    <!--  for new API call  <div v-if="!difference.toString().includes('%')">
       <div :class="[diffColor]">{{ difference }} %</div>
     </div>
     <div v-else>-->
-      <div>
+    <div>
       <div :class="[diffColor]">{{ difference }}</div>
     </div>
     <div v-if="type == ProductTypes.favorites">
-      <Button
-          :iconPrefix="'fas'"
-          :iconName="'star'"
-          :click-handler="removeFromFavorites"/>
-      <Button
-          :iconPrefix="'fas'"
-          :iconName="'cart-plus'"
-          :click-handler="addToCart"
-      />
+      <Button :iconPrefix="'fas'" :iconName="'star'" :click-handler="removeFromFavorites" />
+      <Button :iconPrefix="'fas'" :iconName="'cart-plus'" :click-handler="addToCart" />
     </div>
     <div v-else-if="type == ProductTypes.cart">
-      <Button
-          :iconPrefix="'far'"
-          :iconName="'star'"
-          :click-handler="addToFavorites"
-      />
-      <Button
-          :iconPrefix="'fas'"
-          :iconName="'xmark'"
-          :click-handler="removeFromCart"
-      />
+      <Button :iconPrefix="'far'" :iconName="'star'" :click-handler="addToFavorites" />
+      <Button :iconPrefix="'fas'" :iconName="'xmark'" :click-handler="removeFromCart" />
     </div>
     <div v-else>
-      <Button
-          :iconPrefix="'fas'"
-          :iconName="'cart-plus'"
-          :click-handler="addToCart"
-      />
-      <Button
-          :iconPrefix="'far'"
-          :iconName="'star'"
-          :click-handler="addToFavorites"
-      />
+      <Button :iconPrefix="'fas'" :iconName="'cart-plus'" :click-handler="addToCart" />
+      <Button :iconPrefix="'far'" :iconName="'star'" :click-handler="addToFavorites" />
     </div>
   </section>
-
 </template>
 
 <style scoped>
@@ -160,7 +137,13 @@ watch(isCheckedComp, () => {
 }
 
 .product-link {
-  font-size: medium;
+  font-size: small;
   margin: 0;
+}
+
+@media (min-width: 460px) {
+  .product-link {
+    font-size: medium;
+  }
 }
 </style>
