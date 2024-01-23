@@ -62,6 +62,7 @@ function handleFilteredProducts(filtered) {
   .flex-container {
     flex-direction: row;
     align-items: center;
+    margin: 0.5rem 1rem;
   }
 }
 </style>
