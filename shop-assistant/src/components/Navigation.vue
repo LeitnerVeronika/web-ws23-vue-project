@@ -1,52 +1,51 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+import { ref, watchEffect } from 'vue';
+import { useMediaQuery } from '@vueuse/core';
+
+const menuVisible = ref(false);
+const isLargeScreen = useMediaQuery('(min-width: 550px)');
+
+watchEffect(() => {
+  if (isLargeScreen.value) {
+    menuVisible.value = true;
+  }
+});
 
 function toggleMenu() {
-  const menuItems = document.querySelector('.menu-items');
-  if (menuItems) {
-    menuItems.classList.toggle('active');
+  if (!isLargeScreen.value) {
+    menuVisible.value = !menuVisible.value;
   }
 }
 </script>
 
+
 <template>
   <nav>
     <RouterLink to="/" class="logoLink">Shop Assistant</RouterLink>
-    <div class="burger-menu" v-on:click="toggleMenu">
-      <font-awesome-icon icon="bars" />
-    </div>
-    <div class="menu-items">
+    <div class="menu-items" v-show="menuVisible">
       <RouterLink to="/productSearch" active-class="active">Product Search</RouterLink>
       <RouterLink to="/favorites" active-class="active">Favorites</RouterLink>
       <RouterLink to="/cart" active-class="active">Shopping Cart</RouterLink>
+    </div>
+    <div class="burger-menu" v-on:click="toggleMenu" v-show="!isLargeScreen">
+      <font-awesome-icon icon="bars" size="lg" v-show="!menuVisible" />
+      <font-awesome-icon icon="xmark" size="lg" v-show="menuVisible" />
     </div>
   </nav>
 </template>
 
 <style>
-.burger-menu {
-  display: none;
-}
-.menu-items {
-  display: block;
-}
 nav {
   display: flex;
   align-items: center;
   width: 100%;
-  margin: 0 1rem;
-  margin-top: 2em;
+  justify-content: space-between;
 }
 
 nav a {
   display: inline-block;
-  margin: 0 1em;
-}
-
-a {
-  text-decoration: none;
-  color: var(--color-text);
-  font-size: x-large;
+  font-size: large;
 }
 
 a:hover {
@@ -58,36 +57,55 @@ a:hover {
 }
 
 .logoLink {
-  font-size: xx-large;
+  font-size: x-large;
   color: var(--color-primary);
 }
 
-@media (max-width: 1024px) {
+.burger-menu {
+  margin: 0 2rem;
+  cursor: pointer;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+}
+
+
+@media (min-width: 1025px) {
   nav {
+    margin: 0 1rem;
     margin-top: 1rem;
+    justify-content: flex-start;
   }
 
   nav a {
-    margin: 0 0.5em;
-    font-size: large;
+    margin: 0 1rem;
+    font-size: x-large;
   }
 
   .logoLink {
-    font-size: x-large;
+    font-size: xx-large;
+  }
+
+  .menu-items {
+    flex-direction: row;
+    margin: 0 1rem;
   }
 }
 
-@media (max-width: 550px) {
+@media (min-width: 550px) and (max-width: 1024px) {
   nav {
-    margin: 0;
-    justify-content: space-between;
+    margin-top: 1rem;
+    justify-content: flex-start;
   }
-  .burger-menu {
-    margin: 0 2rem;
-    display: block;
+
+  nav a {
+    margin: 0 0.5rem;
   }
+
   .menu-items {
-    display: none;
+    flex-direction: row;
+    margin: 0 0.5rem;
   }
-}
-</style>
+}</style>

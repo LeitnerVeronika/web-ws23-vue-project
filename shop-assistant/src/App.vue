@@ -22,7 +22,5 @@ header {
   max-height: 100vh;
 }
 
-@media (max-width: 1024px) {}
 
-@media (max-width: 460px) {}
 </style>

@@ -12,12 +12,12 @@ defineProps<{
 <style scoped>
 .heading1 {
   font-family: 'DM Serif Display', serif;
-  font-size: xx-large;
+  font-size: x-large;
   color: var(--color-primary);
 }
-@media (max-width: 460px) {
+@media (min-width: 1025px) {
   .heading1 {
-    font-size: x-large;
+    font-size: xx-large;
   }
 }
 </style>
