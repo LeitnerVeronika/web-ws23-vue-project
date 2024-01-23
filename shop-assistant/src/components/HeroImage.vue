@@ -8,13 +8,14 @@
 
 <style scoped>
 .responsive-image {
+  display: none;
   width: 100%;
   height: 45vh;
   object-fit: cover;
 }
-@media (max-width: 460px) {
+@media (min-width: 460px) {
   .responsive-image {
-    display: none;
+    display: block;
   }
 }
 </style>
