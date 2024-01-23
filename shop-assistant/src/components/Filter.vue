@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import {ref, watch, defineProps, PropType} from 'vue';
 import axios from 'axios';
@@ -100,7 +101,11 @@ fetchMarkets();
 .dropdown {
   position: relative;
   display: inline-block;
-  margin-left: 20px;
+}
+@media (min-width: 460px) {
+  .dropdown {
+    margin-left: 1.3rem;
+  }
 }
 
 .dropdown-button {

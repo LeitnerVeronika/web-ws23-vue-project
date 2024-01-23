@@ -28,30 +28,41 @@ onMounted(async () => {
   console.log(filteredProducts);
 });
 
-
-
 function handleFilteredProducts(filtered) {
   filteredProducts.value = filtered;
 }
 </script>
 
-
 <template>
   <HeroImage />
-    <div class="flex-container">
-      <Heading headingText="Offer of the day" />
-      <SearchBar homepage/>
-      <Filter :originalProducts="originalProducts" :type="ProductTypes.default" @filtered="handleFilteredProducts" />
-    </div>
+  <Heading headingText="Offer of the day" />
+  <div class="flex-container">
+    <SearchBar homepage />
+    <Filter :originalProducts="originalProducts" :type="ProductTypes.default" @filtered="handleFilteredProducts" />
+  </div>
   <main>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <ProductContainer v-if="filteredProducts.length > 0"
-                        :type="ProductTypes.default"
-                        :data="{ products: filteredProducts }" />
+      <ProductContainer v-if="filteredProducts.length > 0" :type="ProductTypes.default"
+        :data="{ products: filteredProducts }" />
       <div v-else>Keine Produkte gefunden.</div>
     </div>
   </main>
 </template>
+
+<style scoped>
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+}
+
+@media (min-width: 460px) {
+  .flex-container {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+</style>
 
