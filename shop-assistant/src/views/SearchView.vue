@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import ProductTypes from "@/components/enums/ProductTypes";
-const markets = "spar,billa"
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import ProductContainer from "@/components/ProductContainer.vue";
@@ -13,7 +12,7 @@ const filteredProducts = ref([]);
 const loading = ref(false);
 const error = ref(null);
 let products = ref(null);
-let searchString = ref('semmel');
+let searchString = ref('');
 
 const route = useRoute();
 searchString = route.query.query;
@@ -23,7 +22,7 @@ searchString = route.query.query;
 onMounted(async () => {
   loading.value = true;
   try {
-    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString + '&markets=' + markets);
+    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString);
     data.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
@@ -43,7 +42,7 @@ const searchForProducts = (search) => {
 const performSearch = (async () => {
   loading.value = true;
   try {
-    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString + '&markets=' + markets);
+    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString);
     data.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
