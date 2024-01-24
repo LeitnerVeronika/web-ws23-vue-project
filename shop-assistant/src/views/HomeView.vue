@@ -58,7 +58,7 @@ function handleFilteredProducts(filtered) {
   margin: 0.5rem 0;
 }
 
-@media (min-width: 460px) {
+@media (min-width: 600px) {
   .flex-container {
     flex-direction: row;
     align-items: center;

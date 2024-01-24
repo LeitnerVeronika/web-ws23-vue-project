@@ -36,7 +36,7 @@ watchEffect(() => {
   color: white;
   border-radius: 8px;
 }
-@media (min-width: 460px) {
+@media (min-width: 1024px) {
   .market-container {
     font-size: 1rem;
   }

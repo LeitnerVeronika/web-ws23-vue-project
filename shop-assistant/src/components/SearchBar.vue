@@ -43,7 +43,7 @@ form {
   width: 90%;
 }
 
-@media (min-width: 460px) {
+@media (min-width: 600px) {
  .search {
    width: auto;
  }

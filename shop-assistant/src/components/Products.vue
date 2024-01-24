@@ -85,10 +85,10 @@ watch(isCheckedComp, () => {
       <h2 class="table-productName">{{ name }}</h2>
     </router-link>
     <Market :text="market" />
-    <div v-if="!priceOld.toString().includes('€')">
+    <div class="price" v-if="!priceOld.toString().includes('€')">
       {{ priceNew }}€<span v-if="difference !== 0"> | <s>{{ priceOld }}€ </s></span>
     </div>
-    <div v-else>
+    <div class="price" v-else>
       {{ priceNew }}<span v-if="difference !== 0"> | <s>{{ priceOld }}</s></span>
     </div>
     <!--  for new API call  <div v-if="!difference.toString().includes('%')">
@@ -116,7 +116,7 @@ watch(isCheckedComp, () => {
 <style scoped>
 .grid-container {
   display: grid;
-  gap: 50px;
+  gap: 30px;
   grid-template-columns: 0.1fr 4fr 0.5fr 1fr 1fr 0.5fr;
 }
 
@@ -137,13 +137,26 @@ watch(isCheckedComp, () => {
 }
 
 .product-link {
-  font-size: small;
+  font-size: x-small;
   margin: 0;
+}
+
+.price {
+  font-size: small;
 }
 
 @media (min-width: 1024px) {
   .product-link {
     font-size: medium;
   }
+
+  .grid-container {
+    gap: 50px;
+  }
+
+  .price {
+    font-size: medium;
+  }
+
 }
 </style>
