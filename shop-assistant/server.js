@@ -4,18 +4,17 @@ const port = 3000;
 const cors = require('cors');
 const axios = require("axios"); // Import the cors middleware
 
-const isDepricatedURL = true;
-
+const isDepricatedURL = false;
 
 app.use(cors());
 
 app.get('/api/today', (req, res) => {
     let apiUrl;
-    if(isDepricatedURL){
+    // if(isDepricatedURL){
         apiUrl = 'https://preisrunter.at/api/ranking/today/'
-    }else {
-        apiUrl = 'https://api.preisrunter.net/v1/ranking/today/';
-    }
+    // }else {
+    //     apiUrl = 'https://api.preisrunter.net/v1/ranking/today/?apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah';
+    // }
     axios.get(apiUrl)
         .then(response => {
             res.json(response.data)
@@ -34,21 +33,17 @@ app.get('/api/search', (req, res) => {
     let apiUrl;
     if(isDepricatedURL) {
         if (marketString === "undefined") {
-            apiUrl = 'https://preisrunter.at/api/search/products/?q=' + productName;
+            apiUrl = 'https://preisrunter.at/api/search/products/?product=' + productName;
         } else {
-            apiUrl = 'https://preisrunter.at/api/search/products/?q=' + productName + '&shops=' + marketString;
+            apiUrl = 'https://preisrunter.at/api/search/products/?product=' + productName + '&shops=' + marketString;
         }
     }
     else {
-        if (marketString === "undefined") {
-            apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName;
-        } else {
-            apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName + '&shops=' + marketString;
-        }
+            apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName + '&apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah' ;
     }
+    console.log(apiUrl)
     axios.get(apiUrl)
         .then(response => {
-            console.log(response.data)
             res.json(response.data)
         })
         .catch(error => {
@@ -59,11 +54,12 @@ app.get('/api/search', (req, res) => {
 
 app.get('/api/search/markets', (req, res) => {
     let apiUrl;
-    if(isDepricatedURL){
+    // if(isDepricatedURL){
         apiUrl = 'https://preisrunter.at/api/search/markets/'
-    }else {
-        apiUrl = 'https://api.preisrunter.net/v1/shops/';
-    }
+    // }else {
+    //     apiUrl = 'https://api.preisrunter.net/v1/shops?apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah';
+    // }
+    console.log(apiUrl)
     axios.get(apiUrl)
         .then(response => {
             res.json(response.data)

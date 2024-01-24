@@ -4,7 +4,7 @@ import { ref, watchEffect } from 'vue';
 import { useMediaQuery } from '@vueuse/core';
 
 const menuVisible = ref(false);
-const isLargeScreen = useMediaQuery('(min-width: 550px)');
+const isLargeScreen = useMediaQuery('(min-width: 600px)');
 
 watchEffect(() => {
   if (isLargeScreen.value) {
@@ -37,6 +37,7 @@ function toggleMenu() {
 
 <style>
 nav {
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   width: 100%;
@@ -75,7 +76,6 @@ a:hover {
 @media (min-width: 1025px) {
   nav {
     margin: 0 1rem;
-    margin-top: 1rem;
     justify-content: flex-start;
   }
 
@@ -94,7 +94,7 @@ a:hover {
   }
 }
 
-@media (min-width: 550px) and (max-width: 1024px) {
+@media (min-width: 600px) and (max-width: 1024px) {
   nav {
     margin-top: 1rem;
     justify-content: flex-start;

@@ -104,7 +104,7 @@ fetchMarkets();
   position: relative;
   display: inline-block;
 }
-@media (min-width: 460px) {
+@media (min-width: 600px) {
   .dropdown {
     margin-left: 1.3rem;
   }

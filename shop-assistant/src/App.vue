@@ -7,7 +7,9 @@ import Navigation from '@/components/Navigation.vue'
   <header>
     <Navigation />
   </header>
-  <RouterView />
+  <div class="page">
+    <RouterView  />
+  </div>
 </template>
 
 <style scoped>
@@ -20,6 +22,14 @@ import Navigation from '@/components/Navigation.vue'
 header {
   line-height: 2;
   max-height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  background-color: var(--color-background-header);
 }
 
+.page {
+  margin-top: 4rem;
+}
 </style>
