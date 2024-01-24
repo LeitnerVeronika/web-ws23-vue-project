@@ -39,11 +39,7 @@ app.get('/api/search', (req, res) => {
         }
     }
     else {
-        if (marketString === "undefined") {
             apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName + '&apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah' ;
-        } else {
-            apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName + '&shops=' + marketString + '&apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah';
-        }
     }
     console.log(apiUrl)
     axios.get(apiUrl)
@@ -51,27 +47,28 @@ app.get('/api/search', (req, res) => {
             res.json(response.data)
         })
         .catch(error => {
-            // console.error('Error fetching data:', error);
+            console.error('Error fetching data:', error);
         });
 
 });
 
-// app.get('/api/search/markets', (req, res) => {
-//     let apiUrl;
-//     if(isDepricatedURL){
-//         apiUrl = 'https://preisrunter.at/api/search/markets/'
-//     }else {
-//         apiUrl = 'https://api.preisrunter.net/v1/shops/';
-//     }
-//     axios.get(apiUrl)
-//         .then(response => {
-//             res.json(response.data)
-//         })
-//         .catch(error => {
-//             // console.error('Error fetching data:', error);
-//         });
-//
-// });
+app.get('/api/search/markets', (req, res) => {
+    let apiUrl;
+    // if(isDepricatedURL){
+        apiUrl = 'https://preisrunter.at/api/search/markets/'
+    // }else {
+    //     apiUrl = 'https://api.preisrunter.net/v1/shops?apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah';
+    // }
+    console.log(apiUrl)
+    axios.get(apiUrl)
+        .then(response => {
+            res.json(response.data)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+});
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
