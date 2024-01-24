@@ -1,48 +1,53 @@
 <script setup lang="ts">
 import ProductTypes from "@/components/enums/ProductTypes";
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import {onMounted, ref, watch} from "vue";
 import ProductContainer from "@/components/ProductContainer.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import { useRoute } from "vue-router";
 import Filter from '@/components/Filter.vue';
 
-const data = ref(null);
+const data = ref({ products: [] });
 const filteredProducts = ref<unknown[]>([]);
 const loading = ref(false);
-const error = ref(null);
+const error = ref<null | string>(null);
 let products = ref<unknown[] | null>(null);
-let searchString = ref('');
+let searchString = ref<string>('');
 
 const route = useRoute();
-searchString = route.query.query;
 
-
+watch(() => searchString, () => {
+  searchString.value = route.query.query as string || '';
+});
 
 onMounted(async () => {
   loading.value = true;
   try {
-    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString);
+    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString.value);
     data.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
   } finally {
     loading.value = false;
-    products = data.value.products;
+    if (data.value !== null) {
+      products.value = data.value.products;
+    }
   }
-  filteredProducts.value = products.value;
+  if (products.value !== null) {
+    filteredProducts.value = products.value;
+  }
   console.log(filteredProducts);
 });
 
 const searchForProducts = (search: String) => {
-  searchString = search;
+  searchString.value = search as string;
   performSearch()
 }
 
 const performSearch = (async () => {
   loading.value = true;
   try {
-    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString);
+    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString.value);
     data.value = await response.data;
   } catch (err) {
     error.value = 'Error fetching data';

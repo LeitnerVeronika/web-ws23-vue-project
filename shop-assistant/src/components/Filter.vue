@@ -6,7 +6,6 @@ import axios from 'axios';
 import Market from './Market.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ProductTypes from "@/components/enums/ProductTypes";
-import type MarketTypes from "@/components/enums/MarketTypes";
 
 const props = defineProps({
   type: {
@@ -21,8 +20,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:selected', 'filtered']);
 
-const markets = ref([]);
-const selectedOptions = ref([]);
+const markets = ref<Market[]>([]);
+const selectedOptions = ref<any[]>([]);
 const isOpen = ref(false);
 const iconPrefix = 'fas';
 
@@ -30,7 +29,7 @@ const iconPrefix = 'fas';
 async function fetchMarkets() {
   try {
     const response = await axios.get('http://localhost:3000/api/search/markets');
-    markets.value = response.data.map((market: MarketTypes) => ({
+    markets.value = response.data.map((market: Market) => ({
       ...market,
       marketName: market.marketName.toUpperCase()
     }));
@@ -60,11 +59,11 @@ function filterProducts() {
       console.log(props.originalProducts);
       console.log(selectedOptions.value);
       tempFilteredProducts = props.originalProducts.filter((product: any) =>
-          selectedOptions.value.includes((product as any).market)
+          selectedOptions.value.includes(product.market)
       );
     }else {
       tempFilteredProducts = props.originalProducts.filter((product: any) =>
-          selectedOptions.value.includes((product as any).productMarket)
+          selectedOptions.value.includes(product.productMarket)
       );
     }
   } else {
@@ -86,7 +85,7 @@ fetchMarkets();
       <font-awesome-icon :icon="[iconPrefix, isOpen ? 'angle-up' : 'angle-down']" class="button-icon" />
     </button>
     <div v-if="isOpen" class="dropdown-menu">
-      <div v-for="market in markets" :key="market.marketName" class="market-item">
+      <div v-for="(market, index) in markets" :key="index" class="market-item">
         <input
             type="checkbox"
             :id="'market-' + (market as any).marketName"
