@@ -24,6 +24,7 @@ const searchEvent = () => {
 </script>
 
 <template>
+  {{homepage}}
   <form action="">
     <input class="search" type="text" placeholder="search for product" v-model="searchString">
     <Button :iconPrefix="'fas'" :iconName="'magnifying-glass'" :click-handler="searchEvent" />

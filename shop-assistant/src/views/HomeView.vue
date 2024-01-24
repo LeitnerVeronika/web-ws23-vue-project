@@ -11,7 +11,7 @@ import Filter from '@/components/Filter.vue';
 const originalProducts = ref([]);
 const filteredProducts = ref([]);
 const loading = ref(false);
-const error = ref(null);
+const error = ref<String | null>(null);
 
 onMounted(async () => {
   loading.value = true;
@@ -28,7 +28,7 @@ onMounted(async () => {
   console.log(filteredProducts);
 });
 
-function handleFilteredProducts(filtered) {
+function handleFilteredProducts(filtered: []) {
   filteredProducts.value = filtered;
 }
 </script>

@@ -9,10 +9,10 @@ import { useRoute } from "vue-router";
 import Filter from '@/components/Filter.vue';
 
 const data = ref(null);
-const filteredProducts = ref([]);
+const filteredProducts = ref<unknown[]>([]);
 const loading = ref(false);
 const error = ref(null);
-let products = ref(null);
+let products = ref<unknown[] | null>(null);
 let searchString = ref('semmel');
 
 const route = useRoute();
@@ -35,7 +35,7 @@ onMounted(async () => {
   console.log(filteredProducts);
 });
 
-const searchForProducts = (search) => {
+const searchForProducts = (search: String) => {
   searchString = search;
   performSearch()
 }
@@ -44,18 +44,20 @@ const performSearch = (async () => {
   loading.value = true;
   try {
     const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString + '&markets=' + markets);
-    data.value = response.data;
+    data.value =  await response.data;
   } catch (err) {
     error.value = 'Error fetching data';
   } finally {
     loading.value = false;
-    products = data.value.products;
+    if(data.value !== null && typeof data.value === 'object') {
+      products.value = data.value.products;
+      filteredProducts.value = products.value;
+    }
   }
-  filteredProducts.value = products.value;
   console.log(filteredProducts);
 });
 
-function handleFilteredProducts(filtered) {
+function handleFilteredProducts(filtered: unknown[]) {
   filteredProducts.value = filtered;
 }
 
@@ -64,7 +66,7 @@ function handleFilteredProducts(filtered) {
 <template>
   <div class="flex-container">
     <SearchBar @search="searchForProducts" />
-    <Filter :originalProducts="products" :type="ProductTypes.search" @filtered="handleFilteredProducts" />
+    <Filter :originalProducts="products || []" :type="ProductTypes.search" @filtered="handleFilteredProducts" />
   </div>
   <main>
     <div v-if="loading">Loading...</div>
