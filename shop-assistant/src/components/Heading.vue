@@ -6,7 +6,7 @@ defineProps<{
 </script>
 
 <template>
-<h1 class="heading1">{{ headingText }}</h1>
+<h1 class="heading1" data-testid="heading-element">{{ headingText }}</h1>
 </template>
 
 <style scoped>

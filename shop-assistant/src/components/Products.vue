@@ -2,8 +2,7 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 import { ref, watch } from "vue";
-import ProductTypes from "@/components/enums/ProductTypes";
-import type MarketTypes from "@/components/enums/MarketTypes";
+import { ProductTypes } from "@/components/enums/ProductTypes";
 import Market from "@/components/Market.vue";
 import Button from "@/components/Button.vue";
 import { useFavoriteStore } from "@/stores/favorites";
@@ -15,7 +14,7 @@ const props = defineProps({
     required: true
   },
   market: {
-    type: Number as PropType<MarketTypes>,
+    type: String,
     required: true
   },
   priceNew: {
@@ -32,7 +31,7 @@ const props = defineProps({
   },
   type: {
     type: Number as PropType<ProductTypes>,
-    required: false
+    required: true
   },
   diffColor: {
     type: String,
@@ -79,7 +78,7 @@ watch(isCheckedComp, () => {
 </script>
 <template>
   <section class="grid-container" :class="{ crossed: isChecked }">
-    <input v-if="type == ProductTypes.cart" type="checkbox" v-model="isCheckedComp" />
+    <input v-if="type == 2" type="checkbox" v-model="isCheckedComp" />
     <div v-else></div>
     <router-link class="product-link" :to="'/product/' + name + '?market=' + market + '&productName=' + name">
       <h2 class="table-productName">{{ name }}</h2>
@@ -98,17 +97,44 @@ watch(isCheckedComp, () => {
     <div>
       <div :class="[diffColor]">{{ difference }}</div>
     </div>
-    <div v-if="type == ProductTypes.favorites">
-      <Button :iconPrefix="'fas'" :iconName="'star'" :click-handler="removeFromFavorites" />
-      <Button :iconPrefix="'fas'" :iconName="'cart-plus'" :click-handler="addToCart" />
+    <div v-if="type == 1">
+      <Button
+          data-testid="fav-item"
+          :iconPrefix="'fas'"
+          :iconName="'star'"
+          :click-handler="removeFromFavorites"/>
+      <Button
+          :iconPrefix="'fas'"
+          :iconName="'cart-plus'"
+          :click-handler="addToCart"
+      />
     </div>
-    <div v-else-if="type == ProductTypes.cart">
-      <Button :iconPrefix="'far'" :iconName="'star'" :click-handler="addToFavorites" />
-      <Button :iconPrefix="'fas'" :iconName="'xmark'" :click-handler="removeFromCart" />
+    <div v-else-if="type == 2">
+      <Button
+          :iconPrefix="'far'"
+          :iconName="'star'"
+          :click-handler="addToFavorites"
+      />
+      <Button
+          data-testid="cart-item"
+          :iconPrefix="'fas'"
+          :iconName="'xmark'"
+          :click-handler="removeFromCart"
+      />
     </div>
     <div v-else>
-      <Button :iconPrefix="'fas'" :iconName="'cart-plus'" :click-handler="addToCart" />
-      <Button :iconPrefix="'far'" :iconName="'star'" :click-handler="addToFavorites" />
+      <Button
+          data-testid="add-cart-item"
+          :iconPrefix="'fas'"
+          :iconName="'cart-plus'"
+          :click-handler="addToCart"
+      />
+      <Button
+          data-testid="add-fav-item"
+          :iconPrefix="'far'"
+          :iconName="'star'"
+          :click-handler="addToFavorites"
+      />
     </div>
   </section>
 </template>
