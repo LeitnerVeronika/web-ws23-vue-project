@@ -27,6 +27,7 @@
   --color-secondary: #F2A950;
   --color-accent: #F2490C;
   --color-background: #F2F2F2;
+  --color-background-header: #ffe6e6;
 
   /*--color-background: var(--vt-c-white);*/
   --color-background-soft: var(--vt-c-white-soft);
@@ -46,6 +47,7 @@
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);
+    --color-background-header: var(--vt-c-indigo);
 
     --color-border: var(--vt-c-divider-dark-2);
     --color-border-hover: var(--vt-c-divider-dark-1);
@@ -96,5 +98,4 @@ body {
 a {
   text-decoration: none;
   color: var(--color-text);
-  /* font-size: x-large; */
 }
