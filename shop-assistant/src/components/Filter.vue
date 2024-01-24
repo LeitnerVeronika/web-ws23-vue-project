@@ -1,10 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import {ref, watch, defineProps, PropType} from 'vue';
+import {ref, watch, defineProps} from 'vue';
+import type {PropType} from 'vue'
 import axios from 'axios';
 import Market from './Market.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ProductTypes from "@/components/enums/ProductTypes";
+import type {MarketTypes} from "@/components/enums/MarketTypes";
 
 const props = defineProps({
   type: {
@@ -28,7 +30,7 @@ const iconPrefix = 'fas';
 async function fetchMarkets() {
   try {
     const response = await axios.get('http://localhost:3000/api/search/markets');
-    markets.value = response.data.map(market => ({
+    markets.value = response.data.map((market: MarketTypes) => ({
       ...market,
       marketName: market.marketName.toUpperCase()
     }));
@@ -41,7 +43,7 @@ function toggleDropdown() {
   isOpen.value = !isOpen.value;
 }
 
-function getMarketDisplayName(marketName) {
+function getMarketDisplayName(marketName: string) {
   return marketName.toLowerCase() === 'mueller' ? 'Müller' : marketName;
 }
 
@@ -57,11 +59,11 @@ function filterProducts() {
     if ((props.type == ProductTypes.cart)||(props.type == ProductTypes.favorites)) {
       console.log(props.originalProducts);
       console.log(selectedOptions.value);
-      tempFilteredProducts = props.originalProducts.filter(product =>
+      tempFilteredProducts = props.originalProducts.filter((product: any) =>
           selectedOptions.value.includes(product.market)
       );
     }else {
-      tempFilteredProducts = props.originalProducts.filter(product =>
+      tempFilteredProducts = props.originalProducts.filter((product: any) =>
           selectedOptions.value.includes(product.productMarket)
       );
     }
