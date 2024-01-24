@@ -38,7 +38,11 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+        working-directory: ./shop-assistant
+      - name: Run unit test
+        run: npm run test:unit
+        working-directory: ./shop-assistant
       - name: Build
         run: npm run build
         working-directory: ./shop-assistant
