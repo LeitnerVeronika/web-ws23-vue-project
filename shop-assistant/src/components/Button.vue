@@ -5,15 +5,17 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
+import type { PropType } from 'vue';
+
 export default {
   props: {
     iconPrefix: String,
     iconName: String,
-    clickHandler: Function,
+    clickHandler: Function as PropType<() => void>,
   },
   methods: {
-    handleClick() {
+    handleClick(): void {
       if (this.clickHandler) {
         this.clickHandler();
       }
