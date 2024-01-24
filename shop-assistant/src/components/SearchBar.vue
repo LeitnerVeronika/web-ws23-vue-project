@@ -24,14 +24,14 @@ const searchEvent = () => {
 </script>
 
 <template>
-  <form action="">
+  <div class="form">
     <input class="search" type="text" placeholder="search for product" v-model="searchString">
     <Button :iconPrefix="'fas'" :iconName="'magnifying-glass'" :click-handler="searchEvent" />
-  </form>
+  </div>
 </template>
 
 <style scoped>
-form {
+ .form{
   margin: 0.5rem 0;
 }
 .search {
@@ -48,7 +48,7 @@ form {
    width: auto;
  }
 
- form {
+ .form {
   margin: 0;
 }
 }
