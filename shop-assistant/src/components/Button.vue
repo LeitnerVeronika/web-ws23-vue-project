@@ -1,6 +1,6 @@
 <template>
   <button @click="handleClick" class="custom-button">
-    <font-awesome-icon :icon="[iconPrefix, iconName]" />
+    <font-awesome-icon :icon="[iconPrefix, iconName]" class="fa-icon" data-testid="font-awesome-icon"/>
   </button>
 </template>
 
