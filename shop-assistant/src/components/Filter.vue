@@ -6,7 +6,7 @@ import axios from 'axios';
 import Market from './Market.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ProductTypes from "@/components/enums/ProductTypes";
-import type {MarketTypes} from "@/components/enums/MarketTypes";
+import type MarketTypes from "@/components/enums/MarketTypes";
 
 const props = defineProps({
   type: {
@@ -60,11 +60,11 @@ function filterProducts() {
       console.log(props.originalProducts);
       console.log(selectedOptions.value);
       tempFilteredProducts = props.originalProducts.filter((product: any) =>
-          selectedOptions.value.includes(product.market)
+          selectedOptions.value.includes((product as any).market)
       );
     }else {
       tempFilteredProducts = props.originalProducts.filter((product: any) =>
-          selectedOptions.value.includes(product.productMarket)
+          selectedOptions.value.includes((product as any).productMarket)
       );
     }
   } else {
@@ -89,11 +89,11 @@ fetchMarkets();
       <div v-for="market in markets" :key="market.marketName" class="market-item">
         <input
             type="checkbox"
-            :id="'market-' + market.marketName"
-            :value="market.marketName"
+            :id="'market-' + (market as any).marketName"
+            :value="(market as any).marketName"
             v-model="selectedOptions"
         >
-        <Market :text="getMarketDisplayName(market.marketName)" />
+        <Market :text="getMarketDisplayName((market as any).marketName)" />
       </div>
     </div>
   </div>
