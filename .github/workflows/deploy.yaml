@@ -36,6 +36,7 @@ jobs:
           node-version: 18
           cache: 'npm'
           path: ./shop-assistant
+          package-lock-path: ./shop-assistant/package-lock.json      
       - name: Install dependencies
         run: npm install 
         working-directory: ./shop-assistant
