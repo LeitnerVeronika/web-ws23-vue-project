@@ -29,29 +29,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - name: Switch to directory
-        run: cd shop-assistant      
+        uses: actions/checkout@v4     
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
       - name: Install dependencies
-        run: |
-          cd shop-assistant
-          npm install 
+        run: npm install 
+        working-directory: ./shop-assistant
       - name: Build
-        run: |
-          cd shop-assistant
-          npm run build
+        run: npm run build
+        working-directory: ./shop-assistant
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           # Upload dist repository
-          path: './dist'
+          path: './shop-assistant/dist'  # Change this line to specify the correct subdirectory
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
