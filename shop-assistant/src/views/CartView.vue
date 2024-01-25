@@ -3,7 +3,11 @@ import ProductTypes from "@/components/enums/ProductTypes";
 import ProductContainer from "@/components/ProductContainer.vue";
 
 let localStore = localStorage.getItem('cart');
-let products = JSON.parse(localStore);
+let products: [];
+if(localStore !== null) {
+  products = JSON.parse(localStore);
+}
+
 </script>
 
 

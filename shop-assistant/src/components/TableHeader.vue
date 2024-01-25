@@ -3,7 +3,7 @@ import Button from '@/components/Button.vue';
 const emit = defineEmits();
 
 
-const sortEvent = (sortValue) => {
+const sortEvent = (sortValue: String) => {
   emit('sort-event', sortValue);
 };
 </script>
