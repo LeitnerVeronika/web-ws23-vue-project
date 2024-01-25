@@ -10,7 +10,7 @@ import Labels from "@/components/Labels.vue";
 /** these variables are used to get the parameters for the API request loading the product data */
 let market: string = '';
 const route = useRoute();
-market = route.query.market || '';
+market = (route.query.market || '') as string;
 let nameStr = route.query.productName
 nameStr = (nameStr as string)?.split(" ") || [];
 let productName = (Array.isArray(nameStr) ? nameStr : []).join('+') || '';
@@ -30,7 +30,7 @@ let product = ref<ProductPage>({
   differenceColor: "",
 });
 let difference = ref<string>('');
-// let market = ref<null | string>(null);
+let labels: string[] = [];
 
 
 /** loads data from backend according to productName and market */
@@ -46,6 +46,7 @@ onMounted(async () => {
     products.value = (data.value?.products || []) as Product[];
     if(products.value.length > 0) {
       product.value = products.value[0];
+      addLabels();
     }
   }
 });
@@ -53,17 +54,20 @@ onMounted(async () => {
 /** adds labels for the product according the output of the new v1 of the Preisrunter API
  *  the v1 version of the API contains some information but not every product is labeled accordingly*/
 function addLabels() {
-  if (products[0].productVegan !== 'false') {
-    labels = [...labels, 'vegan']
+  if (products.value[0].productBio !== 'false') {
+    labels = [...labels, 'bio'];
   }
-  if (products[0].productVegetarisch !== 'false') {
-    labels = [...labels, 'vegetarisch']
+  if (products.value[0].productVegan !== 'false') {
+    labels = [...labels, 'vegan'];
   }
-  if (products[0].productGlutenfrei !== 'false') {
-    labels = [...labels, 'glutenfrei']
+  if (products.value[0].productVegetarisch !== 'false') {
+    labels = [...labels, 'vegetarisch'];
   }
-  if (products[0].productLaktosefrei !== 'false') {
-    labels = [...labels, 'laktosefrei']
+  if (products.value[0].productGlutenfrei !== 'false') {
+    labels = [...labels, 'glutenfrei'];
+  }
+  if (products.value[0].productLaktosefrei !== 'false') {
+    labels = [...labels, 'laktosefrei'];
   }
 }
 
@@ -85,11 +89,9 @@ function addLabels() {
         <div>
           {{ product?.currentPrice }}€ | <s>{{ product?.previousPrice }}€</s>
         </div>
-        <div v-else>
-          {{ products[0].currentPrice }}€
-        </div>
         <div v-if="difference !== undefined">
           <div :class="[product?.differenceColor]">{{ product?.differencePercent}}%</div>
+        </div>
         <div class="label-container">
           <div v-for="label in labels" class="label">
             <Labels :text="label"></Labels>

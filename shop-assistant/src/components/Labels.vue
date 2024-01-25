@@ -25,8 +25,8 @@ watchEffect(() => {
 
 <style scoped>
 .label-container {
-  max-width: 100px;
-  min-width: 80px;
+  max-width: 130px;
+  min-width: 110px;
   max-height: 30px;
   text-align: center;
   padding: 2px;
