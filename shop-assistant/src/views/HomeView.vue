@@ -59,14 +59,13 @@ function handleFilteredProducts(filtered: []) {
 .flex-container {
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0;
+  margin: 0.5rem 1rem;
 }
 
 @media (min-width: 600px) {
   .flex-container {
     flex-direction: row;
     align-items: center;
-    margin: 0.5rem 1rem;
   }
 }
 </style>
