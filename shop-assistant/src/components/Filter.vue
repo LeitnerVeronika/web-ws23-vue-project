@@ -116,7 +116,8 @@ fetchMarkets();
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--color-background);
+  color: var(--color-text);
   box-sizing: border-box;
   min-width: 200px;
 }
@@ -130,9 +131,10 @@ fetchMarkets();
   width: 100%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  background-color: #f9f9f9;
+  background-color: var(--color-background);
   padding: 10px;
   border-radius: 5px;
+  border: 2px solid var(--color-primary);
   margin-top: 3px;
 }
 

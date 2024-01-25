@@ -27,6 +27,15 @@ export default {
 <style scoped>
 .custom-button {
   cursor: pointer;
-  border: none;
+  border: 2px solid var(--color-primary);
+  border-radius: 0.5em;
+  margin: 6px;
+  height: 30px;
+  width: 30px;
+  background-color: transparent;
+}
+
+.fa-icon{
+  color: var(--color-primary)
 }
 </style>
