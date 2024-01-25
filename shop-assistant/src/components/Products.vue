@@ -1,12 +1,11 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import type { PropType } from "vue";
-import { ref, watch } from "vue";
-import { ProductTypes } from "@/components/enums/ProductTypes";
-import Market from "@/components/Market.vue";
-import Button from "@/components/Button.vue";
-import { useFavoriteStore } from "@/stores/favorites";
-import { useCartStore } from "@/stores/shoppingcart";
+import type { PropType } from 'vue'
+import { ref, watch } from 'vue'
+import ProductTypes from '@/components/enums/ProductTypes'
+import Market from '@/components/Market.vue'
+import Button from '@/components/Button.vue'
+import { useFavoriteStore } from '@/stores/favorites'
+import { useCartStore } from '@/stores/shoppingcart'
 
 const props = defineProps({
   name: {
@@ -18,11 +17,11 @@ const props = defineProps({
     required: true
   },
   priceNew: {
-    type: Number,
+    type: String,
     required: true
   },
   priceOld: {
-    type: Number,
+    type: String,
     required: true
   },
   difference: {
@@ -35,7 +34,7 @@ const props = defineProps({
   },
   diffColor: {
     type: String,
-    required: false,
+    required: false
   },
   isChecked: {
     type: Boolean,
@@ -43,52 +42,58 @@ const props = defineProps({
   }
 })
 
-const favStore = useFavoriteStore();
-const emit = defineEmits();
+const emit = defineEmits()
+const favStore = useFavoriteStore()
 let isCheckedComp = ref()
 
 function addToFavorites() {
   favStore.addProduct(props)
 }
 
+/** remove product from store and triggers a custom event named 'remove' to dynamically load products */
 const removeFromFavorites = () => {
   favStore.removeProduct(props)
-  // Trigger a custom event named 'remove'
-  emit('remove');
-};
-
-const cartStore = useCartStore();
-
-function addToCart() {
-  console.log("Add Cart")
-  cartStore.addProduct(props)
-
+  emit('remove')
 }
 
+const cartStore = useCartStore()
+
+function addToCart() {
+  cartStore.addProduct(props)
+}
+
+/** remove product from store and triggers a custom event named 'remove' to dynamically load products */
 const removeFromCart = () => {
   cartStore.removeProduct(props)
-  // Trigger a custom event named 'remove'
-  emit('remove');
-};
+  emit('remove')
+}
 
+/** watch the checkbox and triggers a custom event named 'checked' to update the product props inside the ProductContainer */
 watch(isCheckedComp, () => {
   emit('checked', props.name, isCheckedComp.value)
 })
-
 </script>
 <template>
   <section class="grid-container" :class="{ crossed: isChecked }">
     <input v-if="type == 2" type="checkbox" v-model="isCheckedComp" />
     <div v-else></div>
-    <router-link class="product-link" :to="'/product/' + name + '?market=' + market + '&productName=' + name">
+    <router-link
+      class="product-link"
+      :to="'/product/' + name + '?market=' + market + '&productName=' + name"
+    >
       <h2 class="table-productName">{{ name }}</h2>
     </router-link>
     <Market :text="market" />
     <div class="price" v-if="!priceOld.toString().includes('€')">
-      {{ priceNew }}€<span v-if="difference !== 0"> | <s>{{ priceOld }}€ </s></span>
+      {{ priceNew }}€<span v-if="difference !== 0">
+        | <s>{{ priceOld }}€ </s></span
+      >
     </div>
     <div class="price" v-else>
-      {{ priceNew }}<span v-if="difference !== 0"> | <s>{{ priceOld }}</s></span>
+      {{ priceNew
+      }}<span v-if="difference !== 0">
+        | <s>{{ priceOld }}</s></span
+      >
     </div>
     <div v-if="!difference.toString().includes('%')">
       <div :class="[diffColor]">{{ difference }} %</div>
@@ -96,43 +101,37 @@ watch(isCheckedComp, () => {
     <div v-else>
       <div :class="[diffColor]">{{ difference }}</div>
     </div>
+    <!-- different icons for the different pages -->
     <div v-if="type == 1">
       <Button
-          data-testid="fav-item"
-          :iconPrefix="'fas'"
-          :iconName="'star'"
-          :click-handler="removeFromFavorites"/>
-      <Button
-          :iconPrefix="'fas'"
-          :iconName="'cart-plus'"
-          :click-handler="addToCart"
+        data-testid="fav-item"
+        :iconPrefix="'fas'"
+        :iconName="'star'"
+        :click-handler="removeFromFavorites"
       />
+      <Button :iconPrefix="'fas'" :iconName="'cart-plus'" :click-handler="addToCart" />
     </div>
     <div v-else-if="type == 2">
+      <Button :iconPrefix="'far'" :iconName="'star'" :click-handler="addToFavorites" />
       <Button
-          :iconPrefix="'far'"
-          :iconName="'star'"
-          :click-handler="addToFavorites"
-      />
-      <Button
-          data-testid="cart-item"
-          :iconPrefix="'fas'"
-          :iconName="'xmark'"
-          :click-handler="removeFromCart"
+        data-testid="cart-item"
+        :iconPrefix="'fas'"
+        :iconName="'xmark'"
+        :click-handler="removeFromCart"
       />
     </div>
     <div v-else>
       <Button
-          data-testid="add-cart-item"
-          :iconPrefix="'fas'"
-          :iconName="'cart-plus'"
-          :click-handler="addToCart"
+        data-testid="add-cart-item"
+        :iconPrefix="'fas'"
+        :iconName="'cart-plus'"
+        :click-handler="addToCart"
       />
       <Button
-          data-testid="add-fav-item"
-          :iconPrefix="'far'"
-          :iconName="'star'"
-          :click-handler="addToFavorites"
+        data-testid="add-fav-item"
+        :iconPrefix="'far'"
+        :iconName="'star'"
+        :click-handler="addToFavorites"
       />
     </div>
   </section>
@@ -153,6 +152,12 @@ watch(isCheckedComp, () => {
   color: var(--color-primary);
 }
 
+.product-link {
+  font-size: medium;
+  margin: 0;
+}
+
+/** classes dynamically match to differentColor */
 .red {
   color: darkred;
 }
@@ -182,6 +187,5 @@ watch(isCheckedComp, () => {
   .price {
     font-size: medium;
   }
-
 }
 </style>

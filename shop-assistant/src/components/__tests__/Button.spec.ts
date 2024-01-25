@@ -1,5 +1,4 @@
-// CustomButton.spec.ts
-// import { mount } from 'vue-test-utils';
+
 import { mount } from '@vue/test-utils'
 import CustomButton from '../Button.vue';
 import { describe, it, expect } from 'vitest'
@@ -44,11 +43,8 @@ describe('Button Component', () => {
                 },
             },
         });
-
-        // Simulate a click event
         await wrapper.find('button').trigger('click');
 
-        // The click event should change clickHandlerCalled
         assert.isTrue(clickHandlerCalled, 'clickHandler should be called');
     });
 });

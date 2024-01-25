@@ -1,84 +1,100 @@
 <script setup lang="ts">
-import ProductTypes from "@/components/enums/ProductTypes";
-import axios from "axios";
-import {onMounted, ref, watch} from "vue";
-import ProductContainer from "@/components/ProductContainer.vue";
-import SearchBar from "@/components/SearchBar.vue";
-import { useRoute } from "vue-router";
-import Filter from '@/components/Filter.vue';
+import ProductTypes from '@/components/enums/ProductTypes'
+import axios from 'axios'
+import { onMounted, ref, watch } from 'vue'
+import ProductContainer from '@/components/ProductContainer.vue'
+import SearchBar from '@/components/SearchBar.vue'
+import { useRoute } from 'vue-router'
+import Filter from '@/components/Filter.vue'
 
-const data = ref({ products: [] });
-const filteredProducts = ref<unknown[]>([]);
-const loading = ref(false);
-const error = ref<null | string>(null);
-let products = ref<unknown[] | null>(null);
-let searchString = ref<string>('');
+const data = ref({ products: [] })
+const filteredProducts = ref<unknown[]>([])
+const loading = ref(false)
+const error = ref<null | string>(null)
+let products = ref<unknown[] | null>(null)
+let searchString = ref<string>('')
 
-const route = useRoute();
+const route = useRoute()
 
-watch(() => searchString, () => {
-  searchString.value = route.query.query as string || '';
-});
+/** updates the input from the URL Parameters */
+watch(
+  () => searchString,
+  () => {
+    searchString.value = (route.query.query as string) || ''
+  }
+)
 
+/** load data with the productName from Preisrunter API for requests redirected from the homepage*/
 onMounted(async () => {
-  loading.value = true;
+  loading.value = true
   try {
-    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString.value);
-    data.value = response.data;
+    const response = await axios.get(
+      'http://localhost:3000/api/search?productName=' + searchString.value
+    )
+    data.value = response.data
   } catch (err) {
-    error.value = 'Error fetching data';
+    error.value = 'Error fetching data'
   } finally {
-    loading.value = false;
+    loading.value = false
     if (data.value !== null) {
-      products.value = data.value.products;
+      products.value = data.value.products
     }
   }
   if (products.value !== null) {
-    filteredProducts.value = products.value;
+    filteredProducts.value = products.value
   }
-  console.log(filteredProducts);
-});
+})
 
-const searchForProducts = (search: String) => {
-  searchString.value = search as string;
+/** handles the searchForProducts event emitted by the SearchBar Component */
+const searchForProducts = (search: string) => {
+  searchString.value = search
   performSearch()
 }
 
-const performSearch = (async () => {
-  loading.value = true;
+/** search products from the Preisrunter API with productName*/
+const performSearch = async () => {
+  loading.value = true
   try {
-    const response = await axios.get('http://localhost:3000/api/search?productName=' + searchString.value);
-    data.value = await response.data;
+    const response = await axios.get(
+      'http://localhost:3000/api/search?productName=' + searchString.value
+    )
+    data.value = await response.data
   } catch (err) {
-    error.value = 'Error fetching data';
+    error.value = 'Error fetching data'
   } finally {
-    loading.value = false;
-    if(data.value !== null && typeof data.value === 'object') {
-      products.value = data.value.products;
-      filteredProducts.value = products.value;
+    loading.value = false
+    if (data.value !== null && typeof data.value === 'object') {
+      products.value = data.value.products
+      filteredProducts.value = products.value
     }
   }
-  console.log(filteredProducts);
-});
-
-function handleFilteredProducts(filtered: unknown[]) {
-  filteredProducts.value = filtered;
 }
 
+/** returns the products with market filters applied*/
+function handleFilteredProducts(filtered: unknown[]) {
+  filteredProducts.value = filtered
+}
 </script>
 
 <template>
   <div class="flex-container">
     <SearchBar @search="searchForProducts" />
-    <Filter :originalProducts="products || []" :type="ProductTypes.search" @filtered="handleFilteredProducts" />
+    <Filter
+      :originalProducts="products || []"
+      :type="ProductTypes.search"
+      @filtered="handleFilteredProducts"
+    />
   </div>
   <main>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <ProductContainer v-if="!filteredProducts" :type="ProductTypes.search" :data="{ products }" />
-      <ProductContainer v-if="filteredProducts" :type="ProductTypes.search" :data="{ products: filteredProducts }" />
-
+      <ProductContainer
+        v-if="filteredProducts"
+        :type="ProductTypes.search"
+        :data="{ products: filteredProducts }"
+      />
       <div v-else>Keine Produkte gefunden.</div>
     </div>
   </main>
