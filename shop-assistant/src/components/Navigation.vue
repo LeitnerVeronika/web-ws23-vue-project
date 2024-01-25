@@ -60,10 +60,11 @@ a:hover {
 .logoLink {
   font-size: x-large;
   color: var(--color-primary);
+  margin-left: 1rem;
 }
 
 .burger-menu {
-  margin: 0 2rem;
+  margin-right: 2rem;
   cursor: pointer;
 }
 
@@ -72,29 +73,7 @@ a:hover {
   flex-direction: column;
 }
 
-
-@media (min-width: 1025px) {
-  nav {
-    margin: 0 1rem;
-    justify-content: flex-start;
-  }
-
-  nav a {
-    margin: 0 1rem;
-    font-size: x-large;
-  }
-
-  .logoLink {
-    font-size: xx-large;
-  }
-
-  .menu-items {
-    flex-direction: row;
-    margin: 0 1rem;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 1024px) {
+@media (min-width: 600px) and (max-width: 1023px) {
   nav {
     margin-top: 1rem;
     justify-content: flex-start;
@@ -108,4 +87,28 @@ a:hover {
     flex-direction: row;
     margin: 0 0.5rem;
   }
-}</style>
+
+  @media (min-width: 1024px) {
+    nav {
+      margin: 0 1rem;
+      justify-content: flex-start;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      font-size: x-large;
+    }
+
+    .logoLink {
+      font-size: xx-large;
+    }
+
+    .menu-items {
+      flex-direction: row;
+      margin: 0 1rem;
+    }
+  }
+
+
+}
+</style>
