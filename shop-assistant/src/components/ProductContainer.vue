@@ -4,7 +4,7 @@ import Products from "@/components/Products.vue";
 import ProductTypes from "@/components/enums/ProductTypes";
 import TableHeader from "@/components/TableHeader.vue";
 import type {PropType} from "vue";
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {onMounted, ref, watch} from "vue";
 
 const props = defineProps({
   type: {
@@ -17,7 +17,7 @@ const props = defineProps({
   },
 });
 
-const products = ref<Array<ProductTypes>>([]);
+const products = ref<Array<Product>>([]);
 const sortValue = ref('');
 
 
@@ -28,7 +28,6 @@ watch(() => props.data.products, (newProducts) => {
 
 onMounted(() => {
   products.value = [...props.data.products];
-  console.log('product container: ', products.value);
 });
 
 // Function to update products from localStorage
@@ -51,8 +50,8 @@ const handleFavRemove = () => {
 const updateCartProductsFromLocalStorage = () => {
   if (props.type == ProductTypes.cart) {
     let localStore = localStorage.getItem('cart');
-    products.value = JSON.parse(localStore) || [];
-    products.value.sort((a, b) => a.market.localeCompare(b.market));
+    products.value = JSON.parse(localStore) || '[]';
+    products.value.sort((a: any, b: any) => a.market.localeCompare(b.market));
   }
 };
 
@@ -73,7 +72,7 @@ const handleCheck = (prodName: string, isChecked: boolean) => {
   });
 };
 
-const handleSortEvent = (value) => {
+const handleSortEvent = (value: string) => {
   sortValue.value = value;
   sortProducts();
 };
