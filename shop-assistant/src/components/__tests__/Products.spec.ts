@@ -23,7 +23,6 @@ describe('Product Component', () => {
                 isChecked: false,
             },
         });
-
         expect(wrapper.text()).to.include('ExampleProduct');
         expect(wrapper.find('.grid-container').exists()).toBe(true);
         expect(wrapper.find('.product-link').text()).toBe('ExampleProduct');
@@ -50,7 +49,6 @@ describe('Product Component', () => {
                 isChecked: false,
             },
         });
-
         expect(wrapper.text()).to.include('ExampleProduct');
         expect(wrapper.find('.grid-container').exists()).toBe(true);
         expect(wrapper.find('.product-link').text()).toBe('ExampleProduct');
@@ -77,7 +75,6 @@ describe('Product Component', () => {
                 isChecked: false,
             },
         });
-
         expect(wrapper.text()).to.include('ExampleProduct');
         expect(wrapper.find('.grid-container').exists()).toBe(true);
         expect(wrapper.find('.product-link').text()).toBe('ExampleProduct');

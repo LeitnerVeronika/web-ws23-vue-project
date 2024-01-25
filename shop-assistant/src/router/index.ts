@@ -23,6 +23,7 @@ const router = createRouter({
       name: 'cart',
       component: CartView
     },
+    /** with the route queries search requests can be accessed from other pages (e.g. homepage) */
     {
       path: '/productSearch',
       name: 'productSearch',

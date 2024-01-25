@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 
 import {watchEffect} from "vue";
@@ -13,7 +12,8 @@ const props = defineProps({
 let className = props.text?.toLowerCase()
 
 
-// used to change the css-class for removed products
+/** changes the css-class for removed products
+ *  without this the classes doesn't change for removed products in the Cart/FavoritesView leading to wrong styles */
 watchEffect(() => {
   className = props.text?.toLowerCase()
 });

@@ -3,8 +3,8 @@
 import Products from "@/components/Products.vue";
 import ProductTypes from "@/components/enums/ProductTypes";
 import TableHeader from "@/components/TableHeader.vue";
-import type {PropType} from "vue";
-import {onMounted, ref, watch, watchEffect} from "vue";
+import type { PropType } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const props = defineProps({
   type: {
@@ -18,20 +18,27 @@ const props = defineProps({
 });
 
 const products = ref<Array<ProductTypes>>([]);
-const sortValue = ref('');
+const sortValue = ref<string>('');
 
-
+/** Updates Products according to API Responses */
 watch(() => props.data.products, (newProducts) => {
   products.value = Array.isArray(newProducts) ? newProducts : [];
 }, { immediate: true });
 
 
+/** On component mount, update products or load them from localStorage for the CartView / FavoriteView */
 onMounted(() => {
   products.value = [...props.data.products];
-  console.log('product container: ', products.value);
+  if(props.type == ProductTypes.favorites){
+    updateFavoriteProductsFromLocalStorage();
+  }
+  if(props.type == ProductTypes.cart){
+    updateCartProductsFromLocalStorage();
+  }
 });
 
-// Function to update products from localStorage
+
+/** Function to update products from favorites localStorage */
 const updateFavoriteProductsFromLocalStorage = () => {
   if (props.type == ProductTypes.favorites) {
     let localStore = localStorage.getItem('favorites');
@@ -39,15 +46,12 @@ const updateFavoriteProductsFromLocalStorage = () => {
   }
 };
 
-// On component mount, update products from localStorage
-onMounted(() => {
-  updateFavoriteProductsFromLocalStorage();
-});
 
 const handleFavRemove = () => {
   updateFavoriteProductsFromLocalStorage()
 };
 
+/** Function to update products from favorites localStorage */
 const updateCartProductsFromLocalStorage = () => {
   if (props.type == ProductTypes.cart) {
     let localStore = localStorage.getItem('cart');
@@ -56,15 +60,11 @@ const updateCartProductsFromLocalStorage = () => {
   }
 };
 
-// On component mount, update products from localStorage
-onMounted(() => {
-  updateCartProductsFromLocalStorage();
-});
-
 const handleCartRemove = () => {
   updateCartProductsFromLocalStorage()
 };
 
+/** Is used to update the checked for the CartView */
 const handleCheck = (prodName: string, isChecked: boolean) => {
   products.value.forEach( (item, index) => {
     if(item.name == prodName){
@@ -73,11 +73,13 @@ const handleCheck = (prodName: string, isChecked: boolean) => {
   });
 };
 
-const handleSortEvent = (value) => {
+/** Click Handler for the TableHeader emitted sortEvent */
+const handleSortEvent = (value: string) => {
   sortValue.value = value;
   sortProducts();
 };
 
+/** Sorts the products according to the name/price */
 const sortProducts = () => {
   if (sortValue.value) {
     let sortField = (props.type === ProductTypes.cart || props.type === ProductTypes.favorites) ? 'name' : 'productName';
@@ -87,7 +89,6 @@ const sortProducts = () => {
     } else {
       priceField = (props.type === ProductTypes.search) ? 'currentPrice' : 'priceAfter';
     }
-
 
     if (sortValue.value.includes('name')) {
       products.value = [...products.value].sort((a, b) => {
@@ -105,26 +106,61 @@ const sortProducts = () => {
 
   }
 };
-
-
-
 </script>
 
 <template>
   <section class="product-table">
     <TableHeader @sortEvent="handleSortEvent" />
-    <Products v-if="type == ProductTypes.search" v-for="product in products" :difference="product?.differencePercent"
-              :price-new="product.currentPrice" :price-old="product.previousPrice" :market="product.productMarket"
-              :name="product.productName" :type="type" :search="search" :diffColor="product.differenceColor" />
-    <Products v-else-if="type == ProductTypes.favorites" v-for="product in products" :difference="product?.difference"
-              :price-new="product.priceNew" :price-old="product.priceOld"
-              :market="product.market" :name="product.name" :type="type" :diffColor="product.diffColor" @remove="handleFavRemove"/>
-    <Products v-else-if="type == ProductTypes.cart" v-for="product in products" :difference="product?.difference"
-              :price-new="product.priceNew" :price-old="product.priceOld"
-              :market="product.market" :name="product.name" :type="type" :diffColor="product.diffColor" :is-checked="product.isChecked" @remove="handleCartRemove" @checked="handleCheck"/>
-    <Products v-else v-for="product in products" :difference="product?.priceDiffPercent"
-              :price-new="product.priceAfter" :price-old="product.priceBefore"
-              :market="product.productMarket" :name="product.productName" :type="type" :diffColor="product.color"/>
+    <!--    Handels the display for the different views according to the Product type-->
+    <Products
+      v-if="type == ProductTypes.search"
+      v-for="product in products"
+      :difference="product?.differencePercent"
+      :price-new="product.currentPrice"
+      :price-old="product.previousPrice"
+      :market="product.productMarket"
+      :name="product.productName"
+      :type="type"
+      :search="search"
+      :diffColor="product.differenceColor"
+    />
+    <Products
+      v-else-if="type == ProductTypes.favorites"
+      v-for="product in products"
+      :difference="product?.difference"
+      :price-new="product.priceNew"
+      :price-old="product.priceOld"
+      :market="product.market"
+      :name="product.name"
+      :type="type"
+      :diffColor="product.diffColor"
+      @remove="handleFavRemove"
+    />
+    <Products
+      v-else-if="type == ProductTypes.cart"
+      v-for="product in products"
+      :difference="product?.difference"
+      :price-new="product.priceNew"
+      :price-old="product.priceOld"
+      :market="product.market"
+      :name="product.name"
+      :type="type"
+      :diffColor="product.diffColor"
+      :is-checked="product.isChecked"
+      @remove="handleCartRemove"
+      @checked="handleCheck"
+    />
+    <Products
+      v-else
+      v-for="product in products"
+      :difference="product?.priceDiffPercent"
+      :price-new="product.priceAfter"
+      :price-old="product.priceBefore"
+      :market="product.productMarket"
+      :name="product.productName"
+      :type="type"
+      :diffColor="product.color"
+    />
   </section>
 </template>
 

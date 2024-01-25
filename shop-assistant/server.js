@@ -9,7 +9,8 @@ const isDepricatedApiURL = false;
 
 app.use(cors());
 
-/** API Call for the HomeView to receive the most relevant price changes of the day*/
+/** API Call for the HomeView to receive the most relevant price changes of the day
+ *  this uses the old API call because no information for the correct call with the new version is available*/
 app.get('/api/today', (req, res) => {
     let apiUrl;
 //     if(isDepricatedApiURL){
@@ -26,7 +27,7 @@ app.get('/api/today', (req, res) => {
         });
 });
 
-/** API Call for search with productName and markets parameter */
+/** API call for search with productName and markets parameter */
 app.get('/api/search', (req, res) => {
     let searchString = req.query.productName;
     searchString = searchString.split(" ");
@@ -53,6 +54,8 @@ app.get('/api/search', (req, res) => {
 
 });
 
+/** get available markets from the API
+ *  this is using the old API call thus no information for a suitable call with the v1 version is available */
 app.get('/api/search/markets', (req, res) => {
     let apiUrl;
     // if(isDepricatedApiURL){

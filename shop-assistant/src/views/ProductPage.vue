@@ -7,7 +7,7 @@ import axios from "axios";
 import Market from "@/components/Market.vue";
 import Labels from "@/components/Labels.vue";
 
-/** these variables are used to get the parameters for the redirect from the home page */
+/** these variables are used to get the parameters for the API request loading the product data */
 const route = useRoute();
 let market = route.query.market;
 let nameStr = route.query.productName.split(" ");
@@ -21,7 +21,7 @@ let products = ref(null);
 let difference = ref(null);
 let labels = [];
 
-/** loads data from backend according to productName and market*/
+/** loads data from backend according to productName and market */
 onMounted(async () => {
   loading.value = true;
   try {
@@ -37,6 +37,8 @@ onMounted(async () => {
   }
 });
 
+/** adds labels for the product according the output of the new v1 of the Preisrunter API
+ *  the v1 version of the API contains some information but not every product is labeled accordingly*/
 function addLabels() {
   if (products[0].productVegan !== 'false') {
     labels = [...labels, 'vegan']
