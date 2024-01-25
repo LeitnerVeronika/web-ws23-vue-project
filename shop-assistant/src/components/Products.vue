@@ -59,7 +59,6 @@ const removeFromFavorites = () => {
 const cartStore = useCartStore()
 
 function addToCart() {
-  console.log('Add Cart')
   cartStore.addProduct(props)
 }
 

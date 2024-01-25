@@ -10,13 +10,9 @@ describe('SearchBar Component', () => {
                 homepage: false,
             },
         });
-
         expect(wrapper.find("input").exists()).toBe(true);
-
         expect(wrapper.find("input").classes()).toContain('search');
-
         expect(wrapper.find("button").exists()).toBe(true);
-
     });
 
     it('emit search event', async () => {
@@ -25,9 +21,7 @@ describe('SearchBar Component', () => {
                 homepage: false,
             },
         });
-
         await wrapper.find('button').trigger('click');
-
         expect(wrapper.emitted().search).toBeTruthy();
     });
 });

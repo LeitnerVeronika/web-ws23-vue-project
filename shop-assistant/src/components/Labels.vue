@@ -35,7 +35,7 @@ watchEffect(() => {
   border-radius: 8px;
 }
 
-/** classes dynamically match to title */
+ /** classes dynamically match to title */
 .vegetarisch {
   background-color: #F6BE00;
 }
