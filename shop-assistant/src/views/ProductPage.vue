@@ -5,12 +5,12 @@ import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import Market from "@/components/Market.vue";
+import Labels from "@/components/Labels.vue";
 
-
+/** these variables are used to get the parameters for the redirect from the home page */
 const route = useRoute();
 let market = route.query.market;
-let nameStr = route.query.productName
-nameStr = nameStr.split(" ");
+let nameStr = route.query.productName.split(" ");
 let productName = nameStr.join('+');
 
 
@@ -19,8 +19,9 @@ const loading = ref(false);
 const error = ref(null);
 let products = ref(null);
 let difference = ref(null);
-// let market = ref(null)
+let labels = [];
 
+/** loads data from backend according to productName and market*/
 onMounted(async () => {
   loading.value = true;
   try {
@@ -31,11 +32,25 @@ onMounted(async () => {
   } finally {
     loading.value = false;
     products = data.value.products;
-    difference = products[0].differenceString.split(/[()]/);
-    difference = difference[1]
     market = products[0].productMarket;
+    addLabels();
   }
 });
+
+function addLabels() {
+  if (products[0].productVegan !== 'false') {
+    labels = [...labels, 'vegan']
+  }
+  if (products[0].productVegetarisch !== 'false') {
+    labels = [...labels, 'vegetarisch']
+  }
+  if (products[0].productGlutenfrei !== 'false') {
+    labels = [...labels, 'glutenfrei']
+  }
+  if (products[0].productLaktosefrei !== 'false') {
+    labels = [...labels, 'laktosefrei']
+  }
+}
 
 </script>
 
@@ -50,11 +65,19 @@ onMounted(async () => {
         <div class="market-container">
           <Market :text="market"></Market>
         </div>
-        <div>
+        <div v-if="products[0].previousPrice !== ''">
           {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
         </div>
+        <div v-else>
+          {{ products[0].currentPrice }}€
+        </div>
         <div v-if="difference !== undefined">
-          <div :class="[products[0].differenceColor]">{{ products[0].differencePercent}}%</div>
+          <div :class="[products[0].differenceColor]">{{ products[0].differencePercent }}%</div>
+        </div>
+        <div class="label-container">
+          <div v-for="label in labels" class="label">
+            <Labels :text="label"></Labels>
+          </div>
         </div>
       </section>
     </div>
@@ -70,13 +93,25 @@ section {
 .product-header {
   color: var(--color-primary);
 }
-.market-container{
+
+.market-container {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0.2em;
 }
 
+.label-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label{
+  margin: 0.5em;
+}
+
+/** classes dynamically match to differenceColor */
 .red {
   color: darkred;
 }
