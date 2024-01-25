@@ -28,13 +28,15 @@ const searchEvent = () => {
 <template>
   <div class="form">
     <input class="search" type="text" placeholder="search for product" v-model="searchString" />
-    <Button :iconPrefix="'fas'" :iconName="'magnifying-glass'" :click-handler="searchEvent" />
+    <Button :iconPrefix="'fas'" :iconName="'magnifying-glass'" :click-handler="searchEvent" class="button-icon" />
   </div>
 </template>
 
 <style scoped>
 .form {
   margin: 0.5rem 0;
+  position: relative;
+  display: inline-block;
 }
 
 .search {
@@ -43,7 +45,19 @@ const searchEvent = () => {
   border: 3px solid var(--color-primary);
   border-radius: 5px;
   height: 2.3em;
-  width: 90%;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  padding-left: 10px;
+}
+
+.button-icon{
+position: relative;
+  right: 45px;
+  height: 40px;
+  width: 40px;
+  top: -1px;
+  border: none;
+  background-color: transparent;
 }
 
 @media (min-width: 600px) {
