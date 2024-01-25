@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
-import {ref} from "vue";
+import { ref } from "vue";
 import Button from "@/components/Button.vue";
 import router from "@/router";
 const emit = defineEmits();
 
 const props = defineProps({
-  homepage:{
+  homepage: {
     type: Boolean,
     required: false,
   }
@@ -14,9 +14,9 @@ const props = defineProps({
 
 let searchString = ref('');
 
-const searchEvent = () =>{
-  if(props.homepage){
-    router.push({path: '/productSearch', query: {query: searchString.value}})
+const searchEvent = () => {
+  if (props.homepage) {
+    router.push({ path: '/productSearch', query: { query: searchString.value } })
   }
   emit('search', searchString.value)
 }
@@ -24,20 +24,32 @@ const searchEvent = () =>{
 </script>
 
 <template>
-<input class="search" type="text" placeholder=" search for product" v-model="searchString">
-  <Button
-      :iconPrefix="'fas'"
-      :iconName="'magnifying-glass'"
-      :click-handler="searchEvent"/>
+  <div class="form">
+    <input class="search" type="text" placeholder="search for product" v-model="searchString">
+    <Button :iconPrefix="'fas'" :iconName="'magnifying-glass'" :click-handler="searchEvent" />
+  </div>
 </template>
 
 <style scoped>
+ .form{
+  margin: 0.5rem 0;
+}
 .search {
   font-family: 'DM Serif Display', serif;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   border: 3px solid var(--color-primary);
   border-radius: 5px;
   height: 2.3em;
-  width: 30%;
+  width: 90%;
+}
+
+@media (min-width: 600px) {
+ .search {
+   width: auto;
+ }
+
+ .form {
+  margin: 0;
+}
 }
 </style>

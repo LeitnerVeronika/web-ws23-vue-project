@@ -1,46 +1,69 @@
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
+import axios from "axios";
 import HeroImage from "@/components/HeroImage.vue";
 import Heading from "@/components/Heading.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import ProductTypes from "../components/enums/ProductTypes";
 import ProductContainer from "@/components/ProductContainer.vue";
-import axios from "axios";
-import {onMounted, ref} from "vue";
+import Filter from '@/components/Filter.vue';
 
-const products = ref(null);
+const originalProducts = ref([]);
+const filteredProducts = ref([]);
 const loading = ref(false);
-const error = ref(null);
+const error = ref<String | null>(null);
 
 onMounted(async () => {
   loading.value = true;
   try {
     const response = await axios.get('http://localhost:3000/api/today');
-    products.value = response.data;
+    originalProducts.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
   } finally {
     loading.value = false;
+
   }
+  filteredProducts.value = originalProducts.value;
+  console.log(filteredProducts);
 });
 
+function handleFilteredProducts(filtered: []) {
+  filteredProducts.value = filtered;
+}
 </script>
 
 <template>
   <HeroImage />
-  <div class="content">
-    <div class="flex-container">
-      <Heading headingText="Offer of the day" />
-      <SearchBar homepage/>
-    </div>
+  <Heading headingText="Offer of the day" />
+  <div class="flex-container">
+    <SearchBar homepage />
+    <Filter :originalProducts="originalProducts" :type="ProductTypes.default" @filtered="handleFilteredProducts" />
   </div>
-  <!-- <HeroImage imgSrc="../images/strawberries.jpg"/> -->
   <main>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <div v-if="products !== null">
-        <ProductContainer :type="ProductTypes.default" :data="{products}"/>
-      </div>
+      <ProductContainer v-if="filteredProducts.length > 0" :type="ProductTypes.default"
+        :data="{ products: filteredProducts }" />
+      <div v-else>Keine Produkte gefunden.</div>
     </div>
   </main>
 </template>
+
+<style scoped>
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+}
+
+@media (min-width: 600px) {
+  .flex-container {
+    flex-direction: row;
+    align-items: center;
+    margin: 0.5rem 1rem;
+  }
+}
+</style>
+

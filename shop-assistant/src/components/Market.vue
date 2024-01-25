@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 
 import {watchEffect} from "vue";
@@ -26,14 +27,19 @@ watchEffect(() => {
 
 <style scoped>
 .market-container {
-  max-width: 100px;
-  min-width: 80px;
-  max-height: 30px;
+  width: 6.3em;
+  max-height: 1.9em;
   text-align: center;
   padding: 2px;
   text-transform: uppercase;
+  font-size: 0.75rem;
   color: white;
   border-radius: 8px;
+}
+@media (min-width: 1024px) {
+  .market-container {
+    font-size: 1rem;
+  }
 }
 
 .billa {
@@ -84,4 +90,7 @@ watchEffect(() => {
   background-color: #8B0000;
 }
 
+.aldinordde {
+  background-color: #00008B;
+}
 </style>

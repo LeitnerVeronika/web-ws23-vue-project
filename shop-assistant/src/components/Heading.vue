@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 defineProps<{
   headingText: string
@@ -5,13 +6,23 @@ defineProps<{
 </script>
 
 <template>
-<h1 class="heading1">{{ headingText }}</h1>
+<h1 class="heading1" data-testid="heading-element">{{ headingText }}</h1>
 </template>
 
 <style scoped>
 .heading1 {
   font-family: 'DM Serif Display', serif;
-  font-size: xx-large;
+  font-size: x-large;
   color: var(--color-primary);
+}
+@media (min-width: 460px) {
+  .heading1 {
+    margin: 0 1rem;
+  }
+}
+@media (min-width: 1024px) {
+  .heading1 {
+    font-size: xx-large;
+  }
 }
 </style>

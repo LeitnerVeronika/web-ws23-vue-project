@@ -10,6 +10,7 @@ enum MarketTypes {
     Penny,
     Spar,
     Unimarkt,
+    AldiNord
 }
 
 export default MarketTypes;

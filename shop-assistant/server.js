@@ -12,11 +12,11 @@ app.use(cors());
 /** API Call for the HomeView to receive the most relevant price changes of the day*/
 app.get('/api/today', (req, res) => {
     let apiUrl;
-    if(isDepricatedApiURL){
+//     if(isDepricatedURL){
         apiUrl = 'https://preisrunter.at/api/ranking/today/'
-    }else {
-        apiUrl = 'https://api.preisrunter.net/v1/ranking/today/?region=at';
-    }
+    // }else {
+    //     apiUrl = 'https://api.preisrunter.net/v1/ranking/today/?apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah';
+    // }
     axios.get(apiUrl)
         .then(response => {
             res.json(response.data)
@@ -33,11 +33,34 @@ app.get('/api/search', (req, res) => {
     let productName = searchString.join('+');
     const marketString = req.query.markets;
     let apiUrl;
-    if(marketString === "undefined"){
-        apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName;
-    }else {
-        apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName + '&shops=' + marketString;
+    if(isDepricatedURL) {
+        if (marketString === "undefined") {
+            apiUrl = 'https://preisrunter.at/api/search/products/?product=' + productName;
+        } else {
+            apiUrl = 'https://preisrunter.at/api/search/products/?product=' + productName + '&shops=' + marketString;
+        }
     }
+    else {
+            apiUrl = 'https://api.preisrunter.net/v1/products/?q=' + productName + '&apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah' ;
+    }
+    axios.get(apiUrl)
+        .then(response => {
+            res.json(response.data)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+});
+
+app.get('/api/search/markets', (req, res) => {
+    let apiUrl;
+    // if(isDepricatedURL){
+        apiUrl = 'https://preisrunter.at/api/search/markets/'
+    // }else {
+    //     apiUrl = 'https://api.preisrunter.net/v1/shops?apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah';
+    // }
+    console.log(apiUrl)
     axios.get(apiUrl)
         .then(response => {
             res.json(response.data)
