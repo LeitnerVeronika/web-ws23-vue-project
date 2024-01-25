@@ -5,7 +5,9 @@ import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import Market from "@/components/Market.vue";
+import Labels from "@/components/Labels.vue";
 
+/** these variables are used to get the parameters for the API request loading the product data */
 let market: string = '';
 const route = useRoute();
 market = route.query.market || '';
@@ -30,6 +32,8 @@ let product = ref<ProductPage>({
 let difference = ref<string>('');
 // let market = ref<null | string>(null);
 
+
+/** loads data from backend according to productName and market */
 onMounted(async () => {
   loading.value = true;
   try {
@@ -45,6 +49,23 @@ onMounted(async () => {
     }
   }
 });
+
+/** adds labels for the product according the output of the new v1 of the Preisrunter API
+ *  the v1 version of the API contains some information but not every product is labeled accordingly*/
+function addLabels() {
+  if (products[0].productVegan !== 'false') {
+    labels = [...labels, 'vegan']
+  }
+  if (products[0].productVegetarisch !== 'false') {
+    labels = [...labels, 'vegetarisch']
+  }
+  if (products[0].productGlutenfrei !== 'false') {
+    labels = [...labels, 'glutenfrei']
+  }
+  if (products[0].productLaktosefrei !== 'false') {
+    labels = [...labels, 'laktosefrei']
+  }
+}
 
 </script>
 
@@ -64,8 +85,15 @@ onMounted(async () => {
         <div>
           {{ product?.currentPrice }}€ | <s>{{ product?.previousPrice }}€</s>
         </div>
+        <div v-else>
+          {{ products[0].currentPrice }}€
+        </div>
         <div v-if="difference !== undefined">
           <div :class="[product?.differenceColor]">{{ product?.differencePercent}}%</div>
+        <div class="label-container">
+          <div v-for="label in labels" class="label">
+            <Labels :text="label"></Labels>
+          </div>
         </div>
       </section>
     </div>
@@ -81,13 +109,25 @@ section {
 .product-header {
   color: var(--color-primary);
 }
-.market-container{
+
+.market-container {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0.2em;
 }
 
+.label-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label{
+  margin: 0.5em;
+}
+
+/** classes dynamically match to differenceColor */
 .red {
   color: darkred;
 }
