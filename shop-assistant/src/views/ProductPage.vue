@@ -6,20 +6,29 @@ import {useRoute} from "vue-router";
 import axios from "axios";
 import Market from "@/components/Market.vue";
 
-
+let market: string = '';
 const route = useRoute();
-let market = route.query.market;
+market = route.query.market || '';
 let nameStr = route.query.productName
-nameStr = nameStr.split(" ");
-let productName = nameStr.join('+');
+nameStr = (nameStr as string)?.split(" ") || [];
+let productName = (Array.isArray(nameStr) ? nameStr : []).join('+') || '';
 
 
-const data = ref(null);
+const data = ref({ products: [] });
 const loading = ref(false);
-const error = ref(null);
-let products = ref(null);
-let difference = ref(null);
-// let market = ref(null)
+const error = ref<null | string>(null);
+let products = ref(data.value?.products || []);
+let product = ref<ProductPage>({
+  productName: "",
+  productMarket: "",
+  currentPrice: "",
+  previousPrice: "",
+  differencePercent: "",
+  type: 0,
+  differenceColor: "",
+});
+let difference = ref<string>('');
+// let market = ref<null | string>(null);
 
 onMounted(async () => {
   loading.value = true;
@@ -30,10 +39,10 @@ onMounted(async () => {
     error.value = 'Error fetching data';
   } finally {
     loading.value = false;
-    products = data.value.products;
-    difference = products[0].differenceString.split(/[()]/);
-    difference = difference[1]
-    market = products[0].productMarket;
+    products.value = (data.value?.products || []) as Product[];
+    if(products.value.length > 0) {
+      product.value = products.value[0];
+    }
   }
 });
 
@@ -41,20 +50,22 @@ onMounted(async () => {
 
 <template>
   <HeroImage/>
+  {{product}}
+  {{products}}
   <div v-if="loading">Loading...</div>
   <div v-else-if="error">{{ error }}</div>
   <div v-else>
     <div v-if="data !== null">
       <section>
-        <h1 class="product-header">{{ products[0].productName }}</h1>
+        <h1 class="product-header">{{ product?.productName }}</h1>
         <div class="market-container">
           <Market :text="market"></Market>
         </div>
         <div>
-          {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
+          {{ product?.currentPrice }}€ | <s>{{ product?.previousPrice }}€</s>
         </div>
         <div v-if="difference !== undefined">
-          <div :class="[products[0].differenceColor]">{{ products[0].differencePercent}}%</div>
+          <div :class="[product?.differenceColor]">{{ product?.differencePercent}}%</div>
         </div>
       </section>
     </div>
