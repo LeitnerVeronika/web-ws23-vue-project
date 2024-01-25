@@ -1,6 +1,9 @@
 import { reactive} from 'vue'
 import { defineStore } from 'pinia'
 
+/** this store is used
+ *  by the ProductContainer component to add/remove a product into the localStorage and
+ *  to show the products in the cartView */
 export const useCartStore = defineStore('cart ', () => {
   const products: Product[] = reactive([]);
 

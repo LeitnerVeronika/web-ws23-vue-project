@@ -7,21 +7,33 @@ import axios from "axios";
 import Market from "@/components/Market.vue";
 import Labels from "@/components/Labels.vue";
 
-/** these variables are used to get the parameters for the redirect from the home page */
+/** these variables are used to get the parameters for the API request loading the product data */
+let market: string = '';
 const route = useRoute();
-let market = route.query.market;
-let nameStr = route.query.productName.split(" ");
-let productName = nameStr.join('+');
+market = (route.query.market || '') as string;
+let nameStr = route.query.productName
+nameStr = (nameStr as string)?.split(" ") || [];
+let productName = (Array.isArray(nameStr) ? nameStr : []).join('+') || '';
 
 
-const data = ref(null);
+const data = ref({ products: [] });
 const loading = ref(false);
-const error = ref(null);
-let products = ref(null);
-let difference = ref(null);
-let labels = [];
+const error = ref<null | string>(null);
+let products = ref(data.value?.products || []);
+let product = ref<ProductPage>({
+  productName: "",
+  productMarket: "",
+  currentPrice: "",
+  previousPrice: "",
+  differencePercent: "",
+  type: 0,
+  differenceColor: "",
+});
+let difference = ref<string>('');
+let labels: string[] = [];
 
-/** loads data from backend according to productName and market*/
+
+/** loads data from backend according to productName and market */
 onMounted(async () => {
   loading.value = true;
   try {
@@ -31,24 +43,31 @@ onMounted(async () => {
     error.value = 'Error fetching data';
   } finally {
     loading.value = false;
-    products = data.value.products;
-    market = products[0].productMarket;
-    addLabels();
+    products.value = (data.value?.products || []) as Product[];
+    if(products.value.length > 0) {
+      product.value = products.value[0];
+      addLabels();
+    }
   }
 });
 
+/** adds labels for the product according the output of the new v1 of the Preisrunter API
+ *  the v1 version of the API contains some information but not every product is labeled accordingly*/
 function addLabels() {
-  if (products[0].productVegan !== 'false') {
-    labels = [...labels, 'vegan']
+  if (products.value[0].productBio !== 'false') {
+    labels = [...labels, 'bio'];
   }
-  if (products[0].productVegetarisch !== 'false') {
-    labels = [...labels, 'vegetarisch']
+  if (products.value[0].productVegan !== 'false') {
+    labels = [...labels, 'vegan'];
   }
-  if (products[0].productGlutenfrei !== 'false') {
-    labels = [...labels, 'glutenfrei']
+  if (products.value[0].productVegetarisch !== 'false') {
+    labels = [...labels, 'vegetarisch'];
   }
-  if (products[0].productLaktosefrei !== 'false') {
-    labels = [...labels, 'laktosefrei']
+  if (products.value[0].productGlutenfrei !== 'false') {
+    labels = [...labels, 'glutenfrei'];
+  }
+  if (products.value[0].productLaktosefrei !== 'false') {
+    labels = [...labels, 'laktosefrei'];
   }
 }
 
@@ -56,23 +75,22 @@ function addLabels() {
 
 <template>
   <HeroImage/>
+  {{product}}
+  {{products}}
   <div v-if="loading">Loading...</div>
   <div v-else-if="error">{{ error }}</div>
   <div v-else>
     <div v-if="data !== null">
       <section>
-        <h1 class="product-header">{{ products[0].productName }}</h1>
+        <h1 class="product-header">{{ product?.productName }}</h1>
         <div class="market-container">
           <Market :text="market"></Market>
         </div>
-        <div v-if="products[0].previousPrice !== ''">
-          {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
-        </div>
-        <div v-else>
-          {{ products[0].currentPrice }}€
+        <div>
+          {{ product?.currentPrice }}€ | <s>{{ product?.previousPrice }}€</s>
         </div>
         <div v-if="difference !== undefined">
-          <div :class="[products[0].differenceColor]">{{ products[0].differencePercent }}%</div>
+          <div :class="[product?.differenceColor]">{{ product?.differencePercent}}%</div>
         </div>
         <div class="label-container">
           <div v-for="label in labels" class="label">

@@ -13,6 +13,10 @@ const filteredProducts = ref([]);
 const loading = ref(false);
 const error = ref<String | null>(null);
 
+
+/** loads the 10 products with the highest price difference
+ *  this request works with the old API which will be not available for long
+ *  currently no information for the request with the v1 API version is obtainable*/
 onMounted(async () => {
   loading.value = true;
   try {
@@ -25,9 +29,9 @@ onMounted(async () => {
 
   }
   filteredProducts.value = originalProducts.value;
-  console.log(filteredProducts);
 });
 
+/** filters the products according to markets */
 function handleFilteredProducts(filtered: []) {
   filteredProducts.value = filtered;
 }

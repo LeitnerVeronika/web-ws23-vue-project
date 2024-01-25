@@ -56,8 +56,6 @@ function filterProducts() {
 
   if (selectedOptions.value.length > 0) {
     if ((props.type == ProductTypes.cart)||(props.type == ProductTypes.favorites)) {
-      console.log(props.originalProducts);
-      console.log(selectedOptions.value);
       tempFilteredProducts = props.originalProducts.filter((product: any) =>
           selectedOptions.value.includes(product.market)
       );
@@ -70,7 +68,6 @@ function filterProducts() {
     tempFilteredProducts = props.originalProducts;
   }
   emit('filtered', tempFilteredProducts);
-  console.log(tempFilteredProducts)
 }
 
 watch(selectedOptions, updateSelectedMarkets);
