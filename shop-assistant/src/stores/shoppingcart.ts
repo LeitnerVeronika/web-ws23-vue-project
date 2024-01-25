@@ -2,15 +2,15 @@ import { reactive} from 'vue'
 import { defineStore } from 'pinia'
 
 export const useCartStore = defineStore('cart ', () => {
-  const products = reactive([]);
+  const products: Product[] = reactive([]);
 
-  function addProduct(data) {
+  function addProduct(data: Product) {
     products.push(data)
     localStorage.setItem('cart', JSON.stringify(products));
   }
-  function removeProduct(data){
+  function removeProduct(data: Product){
     products.forEach( (item, index) => {
-      if(item.name == data.name){
+      if(products.some((item) => item.name === data.name)){
         products.splice(index,1);
       }
     });
