@@ -41,20 +41,20 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
-        # working-directory: ./shop-assistant
+        working-directory: ./shop-assistant
       - name: Run unit test
         run: npm run test:unit
-        # working-directory: ./shop-assistant
+        working-directory: ./shop-assistant
       - name: Build
         run: npm run build-only
-        # working-directory: ./shop-assistant
+        working-directory: ./shop-assistant
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           # Upload dist repository
-          path: './dist'
+          path: './shop-assistant/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
