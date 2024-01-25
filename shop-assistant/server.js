@@ -12,7 +12,7 @@ app.use(cors());
 /** API Call for the HomeView to receive the most relevant price changes of the day*/
 app.get('/api/today', (req, res) => {
     let apiUrl;
-//     if(isDepricatedURL){
+//     if(isDepricatedApiURL){
         apiUrl = 'https://preisrunter.at/api/ranking/today/'
     // }else {
     //     apiUrl = 'https://api.preisrunter.net/v1/ranking/today/?apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah';
@@ -33,7 +33,7 @@ app.get('/api/search', (req, res) => {
     let productName = searchString.join('+');
     const marketString = req.query.markets;
     let apiUrl;
-    if(isDepricatedURL) {
+    if(isDepricatedApiURL) {
         if (marketString === "undefined") {
             apiUrl = 'https://preisrunter.at/api/search/products/?product=' + productName;
         } else {
@@ -55,7 +55,7 @@ app.get('/api/search', (req, res) => {
 
 app.get('/api/search/markets', (req, res) => {
     let apiUrl;
-    // if(isDepricatedURL){
+    // if(isDepricatedApiURL){
         apiUrl = 'https://preisrunter.at/api/search/markets/'
     // }else {
     //     apiUrl = 'https://api.preisrunter.net/v1/shops?apiKey=5twKwCM8wFC9vRkF8CBoA2CCD34Rah';
