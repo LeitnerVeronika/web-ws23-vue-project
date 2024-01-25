@@ -86,28 +86,26 @@ a:hover {
     flex-direction: row;
     margin: 0 0.5rem;
   }
+}
 
-  @media (min-width: 1024px) {
-    nav {
-      margin: 0 1rem;
-      justify-content: flex-start;
-    }
-
-    nav a {
-      margin: 0 1rem;
-      font-size: x-large;
-    }
-
-    .logoLink {
-      font-size: xx-large;
-    }
-
-    .menu-items {
-      flex-direction: row;
-      margin: 0 1rem;
-    }
+@media (min-width: 1024px) {
+  nav {
+    margin: 0 1rem;
+    justify-content: flex-start;
   }
 
+  nav a {
+    margin: 0 1rem;
+    font-size: x-large;
+  }
 
+  .logoLink {
+    font-size: xx-large;
+  }
+
+  .menu-items {
+    flex-direction: row;
+    margin: 0 1rem;
+  }
 }
 </style>
