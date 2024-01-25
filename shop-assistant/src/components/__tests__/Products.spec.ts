@@ -15,8 +15,8 @@ describe('Product Component', () => {
                 // Provide your props here
                 name: 'ExampleProduct',
                 market: 'Spar',
-                priceNew: 20.99,
-                priceOld: 25.99,
+                priceNew: '20.99',
+                priceOld: '25.99',
                 difference: '5%',
                 type: 2, // Example ProductTypes enum value
                 diffColor: 'green',
@@ -41,8 +41,8 @@ describe('Product Component', () => {
                 // Provide your props here
                 name: 'ExampleProduct',
                 market: 'Spar',
-                priceNew: 20.99,
-                priceOld: 25.99,
+                priceNew: '20.99',
+                priceOld: '25.99',
                 difference: '5%',
                 type: 1, // Example ProductTypes enum value
                 diffColor: 'red',
@@ -67,8 +67,8 @@ describe('Product Component', () => {
                 // Provide your props here
                 name: 'ExampleProduct',
                 market: 'Spar',
-                priceNew: 20.99,
-                priceOld: 25.99,
+                priceNew: '20.99',
+                priceOld: '25.99',
                 difference: '5%',
                 type: 0, // Example ProductTypes enum value
                 diffColor: 'red',
