@@ -22,6 +22,7 @@ jobs:
       - name: Run API in background
         working-directory: ./shop-assistant
         run: |
+          npm install
           node server.js &
         env:
           PORT: 4000
