@@ -19,10 +19,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
       - name: Run API in background
         working-directory: ./shop-assistant
         run: |
-          node install
+          npm install
           node server.js &
         env:
           PORT: 3000
