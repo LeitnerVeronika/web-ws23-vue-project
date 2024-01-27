@@ -20,7 +20,8 @@ const error = ref<String | null>(null);
 onMounted(async () => {
   loading.value = true;
   try {
-    const response = await axios.get('http://localhost:3000/api/today');
+    // const response = await axios.get('http://localhost:3000/api/today');
+    const response = await axios.get('https://preisrunter.at/api/ranking/today/');
     originalProducts.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
