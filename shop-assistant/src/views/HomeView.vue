@@ -18,7 +18,6 @@ const error = ref<String | null>(null);
  *  this request works with the old API which will be not available for long
  *  currently no information for the request with the v1 API version is obtainable*/
 onMounted(async () => {
-  console.log(process.env.NODE_ENV);
   loading.value = true;
   try {
     // const response = await axios.get('http://localhost:3000/api/today');

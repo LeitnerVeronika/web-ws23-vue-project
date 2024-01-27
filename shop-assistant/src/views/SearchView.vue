@@ -29,7 +29,7 @@ onMounted(async () => {
   loading.value = true
   try {
     const response = await axios.get(
-      'http://localhost:3000/api/search?productName=' + searchString.value
+      'https://shop-assistant-backend.vercel.app/api/search?productName=' + searchString.value
     )
     data.value = response.data
   } catch (err) {
@@ -56,7 +56,7 @@ const performSearch = async () => {
   loading.value = true
   try {
     const response = await axios.get(
-      'http://localhost:3000/api/search?productName=' + searchString.value
+      'https://shop-assistant-backend.vercel.app/api/search?productName=' + searchString.value
     )
     data.value = await response.data
   } catch (err) {

@@ -37,7 +37,7 @@ let labels: string[] = [];
 onMounted(async () => {
   loading.value = true;
   try {
-    const response = await axios.get('http://localhost:3000/api/search?productName=' + productName + '&markets=' + market);
+    const response = await axios.get('https://shop-assistant-backend.vercel.app/api/search?productName=' + productName);
     data.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
