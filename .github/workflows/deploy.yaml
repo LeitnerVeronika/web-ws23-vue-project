@@ -58,4 +58,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
       - name: Start Backend for API
-        run: node .\shop-assistant\server.js
+        run: node server.js
+        working-directory: ./shop-assistant
+
