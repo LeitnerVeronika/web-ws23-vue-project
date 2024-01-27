@@ -30,10 +30,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Copy package-lock.json to root
-        run: cp shop-assistant/package-lock.json ./package-lock.json
-      - name: Copy index.html to root
-        run: cp shop-assistant/index.html ./index.html
+      # - name: Copy package-lock.json to root
+      #   run: cp shop-assistant/package-lock.json ./package-lock.json
+      # - name: Copy index.html to root
+      #   run: cp shop-assistant/index.html ./index.html
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
@@ -57,5 +57,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-      - name: Start Backend for API
-        run: node .\shop-assistant\server.js
