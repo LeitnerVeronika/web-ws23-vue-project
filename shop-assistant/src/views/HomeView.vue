@@ -22,16 +22,8 @@ onMounted(async () => {
   loading.value = true;
   try {
     // const response = await axios.get('http://localhost:3000/api/today');
-    if(process.env.NODE_ENV == 'development') {
-      console.log("Dev")
-      const response = await axios.get('http://localhost:3000/api/today');
-      originalProducts.value = response.data;
-    }
-    if(process.env.NODE_ENV == 'production') {
-      console.log("Prod")
       const response = await axios.get('https://shop-assistant-backend.vercel.app/api/today');
       originalProducts.value = response.data;
-    }
   } catch (err) {
     error.value = 'Error fetching data';
   } finally {
