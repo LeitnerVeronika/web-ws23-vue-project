@@ -67,6 +67,7 @@ const handleCartRemove = () => {
 
 /** Is used to update the checked for the CartView */
 const handleCheck = (prodName: string, isChecked: boolean) => {
+  console.log("handle checked called")
   products.value.forEach( (item, index) => {
     if(item.name == prodName){
       products.value[index].isChecked = isChecked

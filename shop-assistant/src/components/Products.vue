@@ -90,11 +90,13 @@ const updateChecked = (event: Event) => {
     console.error("The 'isChecked' prop is required but not provided.");
     return;
   }
-  emit('update:checked', target.checked);
+  console.log("updateChecked: " + props.name + target.checked)
+  emit('checked', props.name, target.checked);
 };
 
 </script>
 <template>
+  {{isChecked}}
   <section class="grid-container" :class="{ crossed: isChecked }">
     <input v-if="type == 2" type="checkbox" :checked="isChecked" @change="updateChecked($event)"/>
     <div v-else></div>
