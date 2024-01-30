@@ -12,17 +12,11 @@ const filteredProducts = ref<unknown[]>([])
 const loading = ref(false)
 const error = ref<null | string>(null)
 let products = ref<unknown[] | null>(null)
-let searchString = ref<string>('')
+/** updates the input from the URL Parameters (for requests from homepage*/
+const route = useRoute();
+const queryParams: string = route.query.query;
+let searchString = ref<string>(queryParams);
 
-const route = useRoute()
-
-/** updates the input from the URL Parameters */
-watch(
-  () => searchString,
-  () => {
-    searchString.value = (route.query.query as string) || ''
-  }
-)
 
 /** load data with the productName from Preisrunter API for requests redirected from the homepage*/
 onMounted(async () => {
