@@ -44,7 +44,7 @@ const props = defineProps({
 
 const emit = defineEmits()
 const favStore = useFavoriteStore()
-let isCheckedComp = ref()
+let isCheckedComp = ref(props.isChecked)
 
 function addToFavorites() {
   favStore.addProduct(props)
