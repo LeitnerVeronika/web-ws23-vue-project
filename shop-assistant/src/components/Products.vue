@@ -39,11 +39,7 @@ const props = defineProps({
   isChecked: {
     type: Boolean,
     required: false
-  },
-  key:{
-    type: Number,
-    required:false
-}
+  }
 })
 
 const emit = defineEmits()
@@ -77,18 +73,18 @@ watch(isCheckedComp, () => {
   emit('checked', props.name, isCheckedComp.value)
 })
 
-watch(props.isChecked, () =>{
-  if(props.isChecked){
-    isCheckedComp.value = true;
-  }else {
-    isCheckedComp.value = false;
-  }
-})
+// watch(props.isChecked, () =>{
+//   if(props.isChecked){
+//     isCheckedComp.value = true;
+//   }else {
+//     isCheckedComp.value = false;
+//   }
+// })
 
 </script>
 <template>
   <section class="grid-container" :class="{ crossed: isChecked }">
-    <input v-if="type == 2" type="checkbox" v-model="isCheckedComp" />
+    <input v-if="type == 2" type="checkbox" v-model="isChecked" />
     <div v-else></div>
     <router-link
       class="product-link"
