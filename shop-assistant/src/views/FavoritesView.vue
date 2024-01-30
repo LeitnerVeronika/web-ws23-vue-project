@@ -13,7 +13,6 @@ if(localStore !== null) {
 
 </script>
 <template>
-  {{products}}
   <ProductContainer :type="ProductTypes.favorites" :data="{products}"/>
 </template>
 

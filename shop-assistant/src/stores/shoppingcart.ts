@@ -13,8 +13,8 @@ export const useCartStore = defineStore('cart ', () => {
   }
   function removeProduct(data: Product){
     products.forEach( (item, index) => {
-      if(products.some((item) => item.name === data.name)){
-        products.splice(index,1);
+      if (item.name == data.name) {
+        products.splice(index, 1)
       }
     });
     localStorage.setItem('cart', JSON.stringify(products));

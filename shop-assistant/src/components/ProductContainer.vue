@@ -29,8 +29,6 @@ watch(() => props.data.products, (newProducts) => {
 /** On component mount, update products or load them from localStorage for the CartView / FavoriteView */
 onMounted(() => {
   products.value = [...props.data.products];
-  console.log("Favorites Hook: " + localStorage.getItem('favorites'));
-  console.log("Cart Hook: " + localStorage.getItem('cart'));
   if(props.type == ProductTypes.favorites){
     updateFavoriteProductsFromLocalStorage();
   }
@@ -42,7 +40,6 @@ onMounted(() => {
 
 /** Function to update products from favorites localStorage */
 const updateFavoriteProductsFromLocalStorage = () => {
-  console.log("Update Fav Products called")
   if (props.type == ProductTypes.favorites) {
     let localStore = localStorage.getItem('favorites');
     products.value = JSON.parse(localStore || '[]');
@@ -51,19 +48,16 @@ const updateFavoriteProductsFromLocalStorage = () => {
 
 
 const handleFavRemove = () => {
-  console.log("FavRemove called")
   updateFavoriteProductsFromLocalStorage()
 };
 
 /** Function to update products from favorites localStorage */
 const updateCartProductsFromLocalStorage = () => {
-  console.log("Cart Before: " + localStorage.getItem('cart'));
   if (props.type == ProductTypes.cart) {
     let localStore = localStorage.getItem('cart');
     products.value = JSON.parse(localStore) || '[]';
     products.value.sort((a: any, b: any) => a.market.localeCompare(b.market));
   }
-  console.log("Cart After: " + localStorage.getItem('cart'));
 };
 
 const handleCartRemove = () => {
