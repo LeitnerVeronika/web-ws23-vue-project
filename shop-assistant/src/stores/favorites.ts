@@ -14,7 +14,9 @@ export const useFavoriteStore = defineStore('favorites ', () => {
   function removeProduct(data: Product){
     products.forEach( (item, index) => {
       if(products.some((item) => item.name === data.name)){
+        console.log("Remove Item: " + item)
         products.splice(index,1);
+        console.log("Item Sting: " + products);
       }
     });
     localStorage.setItem('favorites', JSON.stringify(products));
