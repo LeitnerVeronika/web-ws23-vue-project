@@ -28,7 +28,8 @@ const iconPrefix = 'fas';
 
 async function fetchMarkets() {
   try {
-    const response = await axios.get('http://localhost:3000/api/search/markets');
+    // const response = await axios.get('http://localhost:3000/api/search/markets');
+    const response = await axios.get('https://shop-assistant-backend.vercel.app/api/markets');
     markets.value = response.data.map((market: Market) => ({
       ...market,
       marketName: market.marketName.toUpperCase()
