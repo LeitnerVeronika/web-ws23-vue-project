@@ -107,6 +107,7 @@ fetchMarkets();
 <style scoped>
 .dropdown {
   position: relative;
+  top: -12px;
   display: inline-block;
 }
 @media (min-width: 600px) {

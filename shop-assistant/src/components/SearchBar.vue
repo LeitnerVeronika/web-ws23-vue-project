@@ -29,6 +29,7 @@ const searchEvent = () => {
   <div class="form">
     <input class="search" type="text" placeholder="search for product" v-model="searchString" />
     <Button :iconPrefix="'fas'" :iconName="'magnifying-glass'" :click-handler="searchEvent" class="button-icon" />
+    <div class="credits">Data provided by <a href="https://preisrunter.at">Preisrunter</a></div>
   </div>
 </template>
 
@@ -58,6 +59,15 @@ position: relative;
   top: -1px;
   border: none;
   background-color: transparent;
+}
+
+.credits{
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+a{
+  color: var(--color-primary);
+  text-decoration: underline;
 }
 
 @media (min-width: 600px) {
