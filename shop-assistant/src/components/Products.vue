@@ -81,10 +81,22 @@ watch(isCheckedComp, () => {
 //   }
 // })
 
+const updateChecked = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  // Emit an event to notify parent about the change in checkbox state
+  // You can emit any event name, here I am using 'update:checked'
+  // Parent component can listen to this event and update the prop value if needed
+  if (props.isChecked === undefined) {
+    console.error("The 'isChecked' prop is required but not provided.");
+    return;
+  }
+  emit('update:checked', target.checked);
+};
+
 </script>
 <template>
   <section class="grid-container" :class="{ crossed: isChecked }">
-    <input v-if="type == 2" type="checkbox" v-model="isCheckedComp" />
+    <input v-if="type == 2" type="checkbox" :checked="isChecked" @change="updateChecked($event)"/>
     <div v-else></div>
     <router-link
       class="product-link"

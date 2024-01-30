@@ -138,7 +138,6 @@ const sortProducts = () => {
       :type="type"
       :diffColor="product.diffColor"
       @removeFav="handleFavRemove"
-      :key="rerenderCheckKey"
     />
     <Products
       v-else-if="type == ProductTypes.cart"
