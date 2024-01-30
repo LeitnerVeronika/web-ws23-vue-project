@@ -49,6 +49,7 @@ function getMarketDisplayName(marketName: string) {
 
 function updateSelectedMarkets() {
   emit('update:selected', selectedOptions.value);
+  console.log(selectedOptions.value);
   filterProducts();
 }
 
