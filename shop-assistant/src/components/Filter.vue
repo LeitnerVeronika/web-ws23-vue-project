@@ -57,20 +57,20 @@ function filterProducts() {
   let tempFilteredProducts = [];
 
   if (selectedOptions.value.length > 0) {
-    if ((props.type == ProductTypes.cart)||(props.type == ProductTypes.favorites)) {
-      tempFilteredProducts = props.originalProducts.filter((product: any) =>
-          selectedOptions.value.includes(product.market)
-      );
-    }else {
-      tempFilteredProducts = props.originalProducts.filter((product: any) =>
-          selectedOptions.value.includes(product.productMarket)
-      );
-    }
+    tempFilteredProducts = props.originalProducts.filter((product) => {
+      if (selectedOptions.value.includes('MÜLLER')) {
+        return product.productMarket === 'MüLLER';
+      } else {
+        return selectedOptions.value.includes(product.productMarket);
+      }
+    });
   } else {
     tempFilteredProducts = props.originalProducts;
   }
+
   emit('filtered', tempFilteredProducts);
 }
+
 
 watch(selectedOptions, updateSelectedMarkets);
 
