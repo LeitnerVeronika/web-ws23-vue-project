@@ -44,7 +44,7 @@ const props = defineProps({
 
 const emit = defineEmits()
 const favStore = useFavoriteStore()
-let isCheckedComp = ref(props.isChecked)
+// let isCheckedComp = ref(props.isChecked)
 
 function addToFavorites() {
   favStore.addProduct(props)
@@ -69,13 +69,13 @@ const removeFromCart = () => {
 }
 
 /** watch the checkbox and triggers a custom event named 'checked' to update the product props inside the ProductContainer */
-watch(isCheckedComp, () => {
-  emit('checked', props.name, isCheckedComp.value)
+watch(props.isChecked, () => {
+  emit('checked', props.name, props.isChecked)
 })
 </script>
 <template>
   <section class="grid-container" :class="{ crossed: isChecked }">
-    <input v-if="type == 2" type="checkbox" v-model="isCheckedComp" />
+    <input v-if="type == 2" type="checkbox" v-model="isChecked" />
     <div v-else></div>
     <router-link
       class="product-link"
