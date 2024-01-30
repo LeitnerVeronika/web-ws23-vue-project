@@ -30,9 +30,6 @@ https://shop-assistant-backend.vercel.app/api/markets
 https://shop-assistant-backend.vercel.app/api/search?productName=X
 https://shop-assistant-backend.vercel.app/api/today
 
-If access to our backend server is needed please contact s2310629016@students.fh-hagenberg.at
-
-API Key used for Preisrunter API:
-5twKwCM8wFC9vRkF8CBoA2CCD34Rah
+If access to our backend server or the key for the Preisrunter API is needed please contact s2310629016@students.fh-hagenberg.at
 
 # Brief user guide:
