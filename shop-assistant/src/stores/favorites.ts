@@ -14,7 +14,8 @@ export const useFavoriteStore = defineStore('favorites ', () => {
   function removeProduct(data: Product){
     products.forEach( (item, index) => {
       if(products.some((item) => item.name === data.name)){
-        console.log("Remove Item: " + item)
+        console.log("Remove Item: " + item.name)
+        console.log("Remove Data: " + data.name)
         products.splice(index,1);
         console.log("Item Sting: " + products);
       }

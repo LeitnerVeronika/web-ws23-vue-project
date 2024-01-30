@@ -42,16 +42,16 @@ onMounted(() => {
 
 /** Function to update products from favorites localStorage */
 const updateFavoriteProductsFromLocalStorage = () => {
-  console.log("Favorites Before: " + localStorage.getItem('favorites'));
+  console.log("Update Fav Products called")
   if (props.type == ProductTypes.favorites) {
     let localStore = localStorage.getItem('favorites');
     products.value = JSON.parse(localStore || '[]');
   }
-  console.log("Favorites After: " + localStorage.getItem('favorites'));
 };
 
 
 const handleFavRemove = () => {
+  console.log("FavRemove called")
   updateFavoriteProductsFromLocalStorage()
 };
 
@@ -141,7 +141,7 @@ const sortProducts = () => {
       :name="product.name"
       :type="type"
       :diffColor="product.diffColor"
-      @remove="handleFavRemove"
+      @removeFav="handleFavRemove"
     />
     <Products
       v-else-if="type == ProductTypes.cart"
@@ -154,7 +154,7 @@ const sortProducts = () => {
       :type="type"
       :diffColor="product.diffColor"
       :is-checked="product.isChecked"
-      @remove="handleCartRemove"
+      @removeCart="handleCartRemove"
       @checked="handleCheck"
     />
     <Products

@@ -53,7 +53,7 @@ function addToFavorites() {
 /** remove product from store and triggers a custom event named 'remove' to dynamically load products */
 const removeFromFavorites = () => {
   favStore.removeProduct(props)
-  emit('remove')
+  emit('removeFav')
 }
 
 const cartStore = useCartStore()
@@ -65,7 +65,7 @@ function addToCart() {
 /** remove product from store and triggers a custom event named 'remove' to dynamically load products */
 const removeFromCart = () => {
   cartStore.removeProduct(props)
-  emit('remove')
+  emit('removeCart')
 }
 
 /** watch the checkbox and triggers a custom event named 'checked' to update the product props inside the ProductContainer */
