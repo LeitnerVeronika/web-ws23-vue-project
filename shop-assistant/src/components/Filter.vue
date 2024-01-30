@@ -58,8 +58,8 @@ function filterProducts() {
 
   if (selectedOptions.value.length > 0) {
     tempFilteredProducts = props.originalProducts.filter((product) => {
-      if (selectedOptions.value.includes('MÜLLER')) {
-        console.log("Prüfung für 'MÜLLER':", product);
+      if (selectedOptions.value.includes('MUELLER')) {
+        console.log("Prüfung für 'MUELLER':", product);
         return product.productMarket === 'MüLLER';
       } else {
         console.log("Standardprüfung:", product);
