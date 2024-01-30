@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { ref, watch } from 'vue'
 import ProductTypes from '@/components/enums/ProductTypes'
 import Market from '@/components/Market.vue'
 import Button from '@/components/Button.vue'
@@ -44,7 +43,6 @@ const props = defineProps({
 
 const emit = defineEmits()
 const favStore = useFavoriteStore()
-let isCheckedComp = ref(props.isChecked)
 
 function addToFavorites() {
   favStore.addProduct(props)
@@ -68,35 +66,17 @@ const removeFromCart = () => {
   emit('removeCart')
 }
 
-/** watch the checkbox and triggers a custom event named 'checked' to update the product props inside the ProductContainer */
-watch(isCheckedComp, () => {
-  emit('checked', props.name, isCheckedComp.value)
-})
-
-// watch(props.isChecked, () =>{
-//   if(props.isChecked){
-//     isCheckedComp.value = true;
-//   }else {
-//     isCheckedComp.value = false;
-//   }
-// })
-
+/** is called on change event of the checkbox and triggers a custom event named 'checked' to update the product props inside the ProductContainer */
 const updateChecked = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  // Emit an event to notify parent about the change in checkbox state
-  // You can emit any event name, here I am using 'update:checked'
-  // Parent component can listen to this event and update the prop value if needed
   if (props.isChecked === undefined) {
-    console.error("The 'isChecked' prop is required but not provided.");
     return;
   }
-  console.log("updateChecked: " + props.name + target.checked)
   emit('checked', props.name, target.checked);
 };
 
 </script>
 <template>
-  {{isChecked}}
   <section class="grid-container" :class="{ crossed: isChecked }">
     <input v-if="type == 2" type="checkbox" :checked="isChecked" @change="updateChecked($event)"/>
     <div v-else></div>
