@@ -29,6 +29,8 @@ watch(() => props.data.products, (newProducts) => {
 /** On component mount, update products or load them from localStorage for the CartView / FavoriteView */
 onMounted(() => {
   products.value = [...props.data.products];
+  console.log("Favorites Hook: " + localStorage.getItem('favorites'));
+  console.log("Cart Hook: " + localStorage.getItem('cart'));
   if(props.type == ProductTypes.favorites){
     updateFavoriteProductsFromLocalStorage();
   }
@@ -40,10 +42,12 @@ onMounted(() => {
 
 /** Function to update products from favorites localStorage */
 const updateFavoriteProductsFromLocalStorage = () => {
+  console.log("Favorites Before: " + localStorage.getItem('favorites'));
   if (props.type == ProductTypes.favorites) {
     let localStore = localStorage.getItem('favorites');
     products.value = JSON.parse(localStore || '[]');
   }
+  console.log("Favorites After: " + localStorage.getItem('favorites'));
 };
 
 
@@ -53,11 +57,13 @@ const handleFavRemove = () => {
 
 /** Function to update products from favorites localStorage */
 const updateCartProductsFromLocalStorage = () => {
+  console.log("Cart Before: " + localStorage.getItem('cart'));
   if (props.type == ProductTypes.cart) {
     let localStore = localStorage.getItem('cart');
     products.value = JSON.parse(localStore) || '[]';
     products.value.sort((a: any, b: any) => a.market.localeCompare(b.market));
   }
+  console.log("Cart After: " + localStorage.getItem('cart'));
 };
 
 const handleCartRemove = () => {
@@ -109,6 +115,7 @@ const sortProducts = () => {
 </script>
 
 <template>
+
   <section class="product-table">
     <TableHeader @sortEvent="handleSortEvent" />
     <!--    Handels the display for the different views according to the Product type-->
