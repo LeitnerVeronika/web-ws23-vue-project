@@ -19,6 +19,7 @@ const props = defineProps({
 
 const products = ref<Array<ProductTypes>>([]);
 const sortValue = ref<string>('');
+let rerenderCheckKey = ref(0);
 
 /** Updates Products according to API Responses */
 watch(() => props.data.products, (newProducts) => {
@@ -77,6 +78,7 @@ const handleCheck = (prodName: string, isChecked: boolean) => {
 const handleSortEvent = (value: string) => {
   sortValue.value = value;
   sortProducts();
+  rerenderCheckKey.value += 1;
 };
 
 /** Sorts the products according to the name/price */
@@ -136,6 +138,7 @@ const sortProducts = () => {
       :type="type"
       :diffColor="product.diffColor"
       @removeFav="handleFavRemove"
+      :key="rerenderCheckKey"
     />
     <Products
       v-else-if="type == ProductTypes.cart"

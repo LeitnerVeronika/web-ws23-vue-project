@@ -39,7 +39,11 @@ const props = defineProps({
   isChecked: {
     type: Boolean,
     required: false
-  }
+  },
+  key:{
+    type: Number,
+    required:false
+}
 })
 
 const emit = defineEmits()
