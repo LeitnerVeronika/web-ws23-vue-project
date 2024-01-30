@@ -15,15 +15,14 @@ describe('Product Component', () => {
                 // Provide your props here
                 name: 'ExampleProduct',
                 market: 'Spar',
-                priceNew: 20.99,
-                priceOld: 25.99,
+                priceNew: '20.99',
+                priceOld: '25.99',
                 difference: '5%',
                 type: 2, // Example ProductTypes enum value
                 diffColor: 'green',
                 isChecked: false,
             },
         });
-
         expect(wrapper.text()).to.include('ExampleProduct');
         expect(wrapper.find('.grid-container').exists()).toBe(true);
         expect(wrapper.find('.product-link').text()).toBe('ExampleProduct');
@@ -42,15 +41,14 @@ describe('Product Component', () => {
                 // Provide your props here
                 name: 'ExampleProduct',
                 market: 'Spar',
-                priceNew: 20.99,
-                priceOld: 25.99,
+                priceNew: '20.99',
+                priceOld: '25.99',
                 difference: '5%',
                 type: 1, // Example ProductTypes enum value
                 diffColor: 'red',
                 isChecked: false,
             },
         });
-
         expect(wrapper.text()).to.include('ExampleProduct');
         expect(wrapper.find('.grid-container').exists()).toBe(true);
         expect(wrapper.find('.product-link').text()).toBe('ExampleProduct');
@@ -69,15 +67,14 @@ describe('Product Component', () => {
                 // Provide your props here
                 name: 'ExampleProduct',
                 market: 'Spar',
-                priceNew: 20.99,
-                priceOld: 25.99,
+                priceNew: '20.99',
+                priceOld: '25.99',
                 difference: '5%',
                 type: 0, // Example ProductTypes enum value
                 diffColor: 'red',
                 isChecked: false,
             },
         });
-
         expect(wrapper.text()).to.include('ExampleProduct');
         expect(wrapper.find('.grid-container').exists()).toBe(true);
         expect(wrapper.find('.product-link').text()).toBe('ExampleProduct');

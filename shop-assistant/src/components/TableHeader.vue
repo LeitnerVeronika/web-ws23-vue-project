@@ -2,8 +2,8 @@
 import Button from '@/components/Button.vue';
 const emit = defineEmits();
 
-
-const sortEvent = (sortValue) => {
+/** emits sort-event that is handled in the ProductContainer Component */
+const sortEvent = (sortValue: String) => {
   emit('sort-event', sortValue);
 };
 </script>

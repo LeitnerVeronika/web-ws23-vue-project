@@ -5,37 +5,71 @@ import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import Market from "@/components/Market.vue";
+import Labels from "@/components/Labels.vue";
 
-
+/** these variables are used to get the parameters for the API request loading the product data */
+let market: string = '';
 const route = useRoute();
-let market = route.query.market;
+market = (route.query.market || '') as string;
 let nameStr = route.query.productName
-nameStr = nameStr.split(" ");
-let productName = nameStr.join('+');
+nameStr = (nameStr as string)?.split(" ") || [];
+let productName = (Array.isArray(nameStr) ? nameStr : []).join('+') || '';
 
 
-const data = ref(null);
+const data = ref({ products: [] });
 const loading = ref(false);
-const error = ref(null);
-let products = ref(null);
-let difference = ref(null);
-// let market = ref(null)
+const error = ref<null | string>(null);
+let products = ref(data.value?.products || []);
+let product = ref<ProductPage>({
+  productName: "",
+  productMarket: "",
+  currentPrice: "",
+  previousPrice: "",
+  differencePercent: "",
+  type: 0,
+  differenceColor: "",
+});
+let difference = ref<string>('');
+let labels: string[] = [];
 
+
+/** loads data from backend according to productName and market */
 onMounted(async () => {
   loading.value = true;
   try {
-    const response = await axios.get('http://localhost:3000/api/search?productName=' + productName + '&markets=' + market);
+    const response = await axios.get('https://shop-assistant-backend.vercel.app/api/search?productName=' + productName);
     data.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
   } finally {
     loading.value = false;
-    products = data.value.products;
-    difference = products[0].differenceString.split(/[()]/);
-    difference = difference[1]
-    market = products[0].productMarket;
+    products.value = (data.value?.products || []) as Product[];
+    if(products.value.length > 0) {
+      product.value = products.value[0];
+      addLabels();
+    }
   }
 });
+
+/** adds labels for the product according the output of the new v1 of the Preisrunter API
+ *  the v1 version of the API contains some information but not every product is labeled accordingly*/
+function addLabels() {
+  if (products.value[0].productBio !== 'false') {
+    labels = [...labels, 'bio'];
+  }
+  if (products.value[0].productVegan !== 'false') {
+    labels = [...labels, 'vegan'];
+  }
+  if (products.value[0].productVegetarisch !== 'false') {
+    labels = [...labels, 'vegetarisch'];
+  }
+  if (products.value[0].productGlutenfrei !== 'false') {
+    labels = [...labels, 'glutenfrei'];
+  }
+  if (products.value[0].productLaktosefrei !== 'false') {
+    labels = [...labels, 'laktosefrei'];
+  }
+}
 
 </script>
 
@@ -46,15 +80,20 @@ onMounted(async () => {
   <div v-else>
     <div v-if="data !== null">
       <section>
-        <h1 class="product-header">{{ products[0].productName }}</h1>
+        <h1 class="product-header">{{ product?.productName }}</h1>
         <div class="market-container">
           <Market :text="market"></Market>
         </div>
         <div>
-          {{ products[0].currentPrice }}€ | <s>{{ products[0].previousPrice }}€</s>
+          {{ product?.currentPrice }}€ | <s>{{ product?.previousPrice }}€</s>
         </div>
         <div v-if="difference !== undefined">
-          <div :class="[products[0].differenceColor]">{{ products[0].differencePercent}}%</div>
+          <div :class="[product?.differenceColor]">{{ product?.differencePercent}}%</div>
+        </div>
+        <div class="label-container">
+          <div v-for="label in labels" class="label">
+            <Labels :text="label"></Labels>
+          </div>
         </div>
       </section>
     </div>
@@ -70,13 +109,25 @@ section {
 .product-header {
   color: var(--color-primary);
 }
-.market-container{
+
+.market-container {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0.2em;
 }
 
+.label-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label{
+  margin: 0.5em;
+}
+
+/** classes dynamically match to differenceColor */
 .red {
   color: darkred;
 }

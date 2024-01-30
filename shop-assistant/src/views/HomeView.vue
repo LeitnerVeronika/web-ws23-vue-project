@@ -11,13 +11,18 @@ import Filter from '@/components/Filter.vue';
 const originalProducts = ref([]);
 const filteredProducts = ref([]);
 const loading = ref(false);
-const error = ref(null);
+const error = ref<String | null>(null);
 
+
+/** loads the 10 products with the highest price difference
+ *  this request works with the old API which will be not available for long
+ *  currently no information for the request with the v1 API version is obtainable*/
 onMounted(async () => {
   loading.value = true;
   try {
-    const response = await axios.get('http://localhost:3000/api/today');
-    originalProducts.value = response.data;
+    // const response = await axios.get('http://localhost:3000/api/today');
+      const response = await axios.get('https://shop-assistant-backend.vercel.app/api/today');
+      originalProducts.value = response.data;
   } catch (err) {
     error.value = 'Error fetching data';
   } finally {
@@ -25,10 +30,10 @@ onMounted(async () => {
 
   }
   filteredProducts.value = originalProducts.value;
-  console.log(filteredProducts);
 });
 
-function handleFilteredProducts(filtered) {
+/** filters the products according to markets */
+function handleFilteredProducts(filtered: []) {
   filteredProducts.value = filtered;
 }
 </script>
@@ -55,14 +60,13 @@ function handleFilteredProducts(filtered) {
 .flex-container {
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0;
+  margin: 0.5rem 1rem;
 }
 
 @media (min-width: 600px) {
   .flex-container {
     flex-direction: row;
     align-items: center;
-    margin: 0.5rem 1rem;
   }
 }
 </style>

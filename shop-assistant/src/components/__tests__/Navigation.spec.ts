@@ -1,13 +1,9 @@
-// Import the necessary functions from 'vitest'
 import {describe, expect, it} from 'vitest'
 import {mount} from '@vue/test-utils'
 import NavigationComponent from '../Navigation.vue';
 
-// Describe the test suite for NavigationComponent
 describe('Navigation Component', () => {
-    // Test case: Ensure the headingText is rendered correctly
     it('renders the correct navigation text', async () => {
-        // Mount the NavigationComponent and provide the headingText prop
         const wrapper = mount(NavigationComponent, {});
 
         expect(wrapper.find("nav").exists()).toBe(true);
