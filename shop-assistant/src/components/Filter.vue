@@ -1,11 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import {ref, watch, defineProps} from 'vue';
-import type {PropType} from 'vue'
+import type {PropType} from 'vue';
 import axios from 'axios';
 import Market from './Market.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ProductTypes from "@/components/enums/ProductTypes";
+
 
 const props = defineProps({
   type: {
@@ -18,64 +19,70 @@ const props = defineProps({
   },
 });
 
+
 const emit = defineEmits(['update:selected', 'filtered']);
+
 
 const markets = ref<Market[]>([]);
 const selectedOptions = ref<any[]>([]);
 const isOpen = ref(false);
 const iconPrefix = 'fas';
 
-
+/** function to fetch markets */
 async function fetchMarkets() {
   try {
-    // const response = await axios.get('http://localhost:3000/api/search/markets');
     const response = await axios.get('https://shop-assistant-backend.vercel.app/api/markets');
     markets.value = response.data.map((market: Market) => ({
       ...market,
       marketName: market.marketName.toUpperCase()
     }));
   } catch (error) {
-    console.error('Fehler beim Abrufen der Märkte:', error);
+    console.error('Error fetching markets:', error);
   }
 }
 
+/** Function to toggle the state of dropdown */
 function toggleDropdown() {
   isOpen.value = !isOpen.value;
 }
 
+/** Function to get display name for a market */
 function getMarketDisplayName(marketName: string) {
   return marketName.toLowerCase() === 'mueller' ? 'Müller' : marketName;
 }
 
+/** Function to update the selected markets and filter products */
 function updateSelectedMarkets() {
   emit('update:selected', selectedOptions.value);
-  console.log(selectedOptions.value);
+
   filterProducts();
 }
 
+/** Function to filter the products based on selected filter options */
 function filterProducts() {
   let tempFilteredProducts = [];
 
   if (selectedOptions.value.length > 0) {
-    if ((props.type == ProductTypes.cart)||(props.type == ProductTypes.favorites)) {
-      tempFilteredProducts = props.originalProducts.filter((product: any) =>
-          selectedOptions.value.includes(product.market)
-      );
-    }else {
-      tempFilteredProducts = props.originalProducts.filter((product: any) =>
-          selectedOptions.value.includes(product.productMarket)
-      );
-    }
+    tempFilteredProducts = props.originalProducts.filter((product) => {
+      if (selectedOptions.value.includes('MUELLER')) {
+        return product.productMarket === 'MüLLER';
+      } else {
+        return selectedOptions.value.includes(product.productMarket);
+      }
+    });
   } else {
     tempFilteredProducts = props.originalProducts;
   }
   emit('filtered', tempFilteredProducts);
 }
 
+/** Watching selectedOptions for changes, and calling updateSelectedMarkets when it changes */
 watch(selectedOptions, updateSelectedMarkets);
+
 
 fetchMarkets();
 </script>
+
 
 <template>
   <div class="dropdown">
