@@ -84,7 +84,7 @@ watch(isCheckedComp, () => {
 </script>
 <template>
   <section class="grid-container" :class="{ crossed: isChecked }">
-    <input v-if="type == 2" type="checkbox" v-model="isChecked" />
+    <input v-if="type == 2" type="checkbox" v-model="isCheckedComp" />
     <div v-else></div>
     <router-link
       class="product-link"
