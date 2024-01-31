@@ -1,5 +1,7 @@
-# Team members: 
-Veronika Leitner, Larissa Schäfer, Laura Haberl
+# Team members:
+Laura Haberl   
+Veronika Leitner    
+Larissa Schäfer   
 
 # URL to live application: 
 https://leitnerveronika.github.io/web-ws23-vue-project/
@@ -13,7 +15,7 @@ or can be added directly to the shopping list (shopping basket).
 
 # Local dev setup & configuration:
 ## Start local environment
-Open Project in IDE
+Open Project in IDE  
 ```bash
 cd .\shop-assistant\
 npm install
@@ -26,9 +28,9 @@ npm run test:unit
 ```
 
 ## API requests for backend
-https://shop-assistant-backend.vercel.app/api/markets
-https://shop-assistant-backend.vercel.app/api/search?productName=X
-https://shop-assistant-backend.vercel.app/api/today
+https://shop-assistant-backend.vercel.app/api/markets  
+https://shop-assistant-backend.vercel.app/api/search?productName=X  
+https://shop-assistant-backend.vercel.app/api/today  
 
 If access to our backend server or the key for the Preisrunter API is needed please contact s2310629016@students.fh-hagenberg.at
 
