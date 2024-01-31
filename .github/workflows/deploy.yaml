@@ -45,7 +45,7 @@ jobs:
         run: npm run test:unit
         working-directory: ./shop-assistant
       - name: Setup playwright
-        run: npx playwright install
+        run: npx playwright install --with-deps
         working-directory: ./shop-assistant
       - name: Run e2e tests
         run: npx playwright test
