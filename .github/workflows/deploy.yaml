@@ -44,6 +44,9 @@ jobs:
       - name: Run unit test
         run: npm run test:unit
         working-directory: ./shop-assistant
+      - name: Run e2e tests
+        run: npx playwright test
+        working-directory: ./shop-assistant
       - name: Build
         run: npm run build-only
         working-directory: ./shop-assistant
