@@ -3,6 +3,9 @@ Laura Haberl
 Veronika Leitner    
 Larissa Schäfer   
 
+# URL to GitHub repository
+https://github.com/LeitnerVeronika/web-ws23-vue-project.git
+
 # URL to live application: 
 https://leitnerveronika.github.io/web-ws23-vue-project/
 
