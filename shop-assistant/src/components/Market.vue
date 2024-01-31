@@ -28,14 +28,18 @@ watchEffect(() => {
 <style scoped>
 .market-container {
   width: 6.3em;
-  max-height: 1.9em;
+  height: fit-content;
   text-align: center;
   padding: 2px;
   text-transform: uppercase;
   font-size: 0.75rem;
   color: white;
   border-radius: 8px;
+  margin-bottom: 5px;
 }
+/*
+  max-height: 1.9em;
+  */
 @media (min-width: 1024px) {
   .market-container {
     font-size: 1rem;
