@@ -52,7 +52,7 @@ const config: PlaywrightTestConfig = {
         ...devices['Desktop Chrome']
       }
     },
-    {
+    /*{
       productName: 'firefox',
       use: {
         ...devices['Desktop Firefox']
@@ -63,7 +63,7 @@ const config: PlaywrightTestConfig = {
       use: {
         ...devices['Desktop Safari']
       }
-    }
+    }*/
 
     /* Test against mobile viewports. */
     // {

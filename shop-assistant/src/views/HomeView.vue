@@ -46,7 +46,7 @@ function handleFilteredProducts(filtered: []) {
     <Filter :originalProducts="originalProducts" :type="ProductTypes.default" @filtered="handleFilteredProducts" />
   </div>
   <main>
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading" class="loading-message">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <ProductContainer v-if="filteredProducts.length > 0" :type="ProductTypes.default"
