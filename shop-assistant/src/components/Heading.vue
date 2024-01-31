@@ -1,4 +1,8 @@
-<!-- eslint-disable vue/multi-word-component-names -->
+<!-- 
+This Vue component is used to display the headings on the webpage. 
+The heading text is passed as a prop to the component. 
+The font size is responsive, with a larger size used for viewports that are 1024px or wider.
+-->
 <script setup lang="ts">
 defineProps<{
   headingText: string
