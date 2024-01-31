@@ -75,7 +75,7 @@ function addLabels() {
 
 <template>
   <HeroImage/>
-  <div v-if="loading">Loading...</div>
+  <div v-if="loading" class="loading-message">Loading...</div>
   <div v-else-if="error">{{ error }}</div>
   <div v-else>
     <div v-if="data !== null">
