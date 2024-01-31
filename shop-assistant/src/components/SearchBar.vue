@@ -1,3 +1,7 @@
+<!-- 
+This Vue component is used to provide a search functionality for products on the webpage. 
+The component includes an input field for the user to enter a search string and a button to initiate the search. 
+-->
 <script setup lang="ts">
 import { ref } from 'vue'
 import Button from '@/components/Button.vue'
